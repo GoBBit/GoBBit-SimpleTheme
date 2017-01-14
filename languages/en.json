@@ -1,0 +1,13 @@
+{
+	"login": "Log In",
+	"register": "Register",
+	"logout": "Log Out",
+	"close":"Close",
+	"delete":"Delete",
+
+	"recent": "Recent",
+	"home": "Home",
+
+
+	"password_does_not_match": "Passwords does not match!"
+}
