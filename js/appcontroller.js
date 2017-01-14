@@ -28,6 +28,9 @@ myApp.controller('App', function($scope, $http, AppService) {
 		$scope.user = AppService.user = response.data;
 		AppService.csrf = response.data.csrf;
 
+		// load home topics
+		$scope.getHomeTopics(0);
+
 		$scope.allLoaded = true;
 	}, function(e){
 		// error
@@ -45,6 +48,33 @@ myApp.controller('App', function($scope, $http, AppService) {
 			// error
 		});
 	};
+
+	$scope.getHomeTopics = function(start){
+		$scope.community = null;
+		$http.get("/api/user/home?start="+start).then(function(response) {
+	      $scope.topics = response.data;
+		}, function(e){
+			// error
+		});
+	};
+
+	$scope.getCommunityTopics = function(c, start){
+		$scope.community = c;
+		$http.get("/api/community/topics?c="+c+"&start="+start).then(function(response) {
+	      $scope.topics = response.data;
+		}, function(e){
+			// error
+		});
+	};
+
+	$scope.getCommunities = function(){
+		$http.get("/api/communities").then(function(response) {
+	      $scope.communities = response.data;
+		}, function(e){
+			// error
+		});
+	};
+	$scope.getCommunities();
 
 
 	$scope.formatDate = function(t){

@@ -18,12 +18,12 @@
 
 <body ng-app="GoBBit">
 
-	<div ng-controller="App" ng-init="user={};topics=[];">
+	<div ng-controller="App" ng-init="user={};topics=[];communities=[];">
 
 		<div id="navbar" class="sticky">
 			<nav id="navbar-main">
 				<ul style="display: block;list-style-type: none;">
-					<li><a href="#">{{ translation.home }}</a></li>
+					<li><a ng-click="getHomeTopics(0)" href="#">{{ translation.home }}</a></li>
 					<li><a href="#">{{ translation.recent }}</a></li>
 
 					<!-- Log out and user info -->
@@ -80,12 +80,38 @@
 			</div>
 		</center>
 
+		<!-- Communities Dropdown -->
+		<div style="left: 10%;position: relative;">
+			<button data-component="dropdown" data-target="#communities-dropdown">Communities<span class="caret down"></span></button>
+		</div>
+		<div class="dropdown" id="communities-dropdown">
+			<center>
+				
+				<ul class="communities">
+					<li ng-click="getCommunityTopics(c.slug,0)" style="float:none;" ng-repeat="c in communities"><a class="community" href="#">{{ c.name }}</a></li>
+				</ul>
+
+				<a href="#" data-action="dropdown-close">Close</a>
+			</center>
+		</div>
 		<center>
 			<table class="striped" style="width:80%">
+				<thead>
+			        <tr>
+			            <th class="width-50">{{ translation.title }}</th>
+			            <th class="width-30">{{ translation.community }}</th>
+			            <th class="width-20">{{ translation.username }}</th>
+			        </tr>
+			    </thead>
 			    <tbody>
 			        <tr ng-repeat="t in topics">
-			            <td>{{ t.title }}</td>
-			            <td>{{ t.user.username }}</td>
+			            <td class="width-50">{{ t.title }}</td>
+			            <td class="width-30">
+			            	<a href="#">
+			            		{{ t.community }}
+			            	</a>
+			            </td>
+			            <td class="width-20">{{ t.user.username }}</td>
 			        </tr>
 			    </tbody>
 			</table>
