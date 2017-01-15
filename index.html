@@ -6,6 +6,7 @@
 
 	<!-- CSS -->
 	<link rel="stylesheet" href="/css/vendor/kube.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/css/gobbit.css">
 
 	<!-- JS Libs -->
@@ -18,16 +19,18 @@
 
 <body ng-app="GoBBit">
 
-	<div ng-controller="App" ng-init="user={};topics=[];communities=[];">
+	<div ng-controller="App" ng-init="user={};topics=[];communities=[];community=null;">
 
 		<div id="navbar" class="sticky">
-			<nav id="navbar-main">
-				<ul style="display: block;list-style-type: none;">
-					<li><a ng-click="getHomeTopics(0)" href="#">{{ translation.home }}</a></li>
-					<li><a href="#">{{ translation.recent }}</a></li>
+			<nav id="navbar-main" class="row">
+				<ul class="col col-10" style="display: block;list-style-type: none;">
+					<li><a ng-click="getHomeTopics(0)" href="#!">{{ translation.home }}</a></li>
+					<li><a href="#!">{{ translation.recent }}</a></li>
+				</ul>
 
+				<ul class="col col-2" style="display: block;list-style-type: none;">
 					<!-- Log out and user info -->
-					<li ng-if="user.username"><a href="#">{{ user.username }}</a></li>
+					<li ng-if="user.username"><a href="#!">{{ user.username }}</a></li>
 					<li ng-if="user.username"><a href="/logout">{{ translation.logout }}</a></li>
 				</ul>
 			</nav>
@@ -88,12 +91,40 @@
 			<center>
 				
 				<ul class="communities">
-					<li ng-click="getCommunityTopics(c.slug,0)" style="float:none;" ng-repeat="c in communities"><a class="community" href="#">{{ c.name }}</a></li>
+					<li ng-click="setCommunity($index)" style="float:none;" ng-repeat="c in communities"><a class="community" href="#!">{{ c.name }}</a></li>
 				</ul>
 
-				<a href="#" data-action="dropdown-close">Close</a>
+				<a href="#!" data-action="dropdown-close">Close</a>
 			</center>
 		</div>
+
+		<!-- Commnity info (if selected) -->
+		<center ng-if="community" class="width-80 bgimage" style="background-image:url({{ community.picture }});">
+			<div class="blurcontent">
+				<h2 style="color:white">{{ community.name }}</h2>
+				<i>{{ community.description }}</i>
+				<br>
+				<i><b>{{ translation.created }}</b>: {{ formatDateComplete(community.creation_date) }}</i>
+
+				<div class="row centered">
+					<div class="col-1">
+						<i class="fa fa-pencil" aria-hidden="true"></i>
+						{{ community.posts_number }}
+					</div>
+					<div class="col-1">
+						<i class="fa fa-comments" aria-hidden="true"></i>
+						{{ community.topics_number }}
+					</div>
+					<div class="col-1">
+						<i class="fa fa-user-md" aria-hidden="true"></i>
+						{{ community.mods.length }}
+					</div>
+				</div>
+
+			</div>
+		</center>
+
+		<!-- Topics table -->
 		<center>
 			<table class="striped" style="width:80%">
 				<thead>
@@ -107,7 +138,7 @@
 			        <tr ng-repeat="t in topics">
 			            <td class="width-50">{{ t.title }}</td>
 			            <td class="width-30">
-			            	<a href="#">
+			            	<a href="#!">
 			            		{{ t.community }}
 			            	</a>
 			            </td>

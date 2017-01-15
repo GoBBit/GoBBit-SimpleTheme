@@ -59,12 +59,17 @@ myApp.controller('App', function($scope, $http, AppService) {
 	};
 
 	$scope.getCommunityTopics = function(c, start){
-		$scope.community = c;
-		$http.get("/api/community/topics?c="+c+"&start="+start).then(function(response) {
+		$http.get("/api/community/topics?c="+ c +"&start="+ start).then(function(response) {
 	      $scope.topics = response.data;
 		}, function(e){
 			// error
 		});
+	};
+
+	$scope.setCommunity = function(idx){
+		$scope.community = $scope.communities[idx];
+		var c = $scope.community.slug;
+		$scope.getCommunityTopics(c, 0);
 	};
 
 	$scope.getCommunities = function(){
