@@ -1,10 +1,14 @@
 myApp.controller('topic', function($scope, $http, AppService) {
+	$scope.postsPerPage = 20;
 	
 	$scope.init = function(){
 		window.addEventListener('topic:load', function(evt){
 			$scope.tid = evt.tid;
 			$scope.getTopic();
 			$scope.getTopicPosts(0);
+
+			// Show modal
+			$("#topicModal").show(200);
 		});
 	};
 	$scope.init();
@@ -12,6 +16,8 @@ myApp.controller('topic', function($scope, $http, AppService) {
 	$scope.getTopic = function(){
 		$http.get("/api/topic?tid="+ $scope.tid).then(function(response) {
 	      $scope.topic = response.data;
+	      $scope.page = 0;
+	      $scope.pages = Math.floor($scope.topic.posts_number / $scope.postsPerPage) + 1;
 		}, function(e){
 			AppService.showErrorAlert(e.data);
 		});
@@ -23,6 +29,46 @@ myApp.controller('topic', function($scope, $http, AppService) {
 		}, function(e){
 			AppService.showErrorAlert(e.data);
 		});
+	};
+	$scope.getTopicPostsByPage = function(p){
+		$scope.page = p;
+		var start = $scope.postsPerPage * p;
+		$scope.getTopicPosts(start);
+	};
+
+	$scope.nextPage = function(){
+		if($scope.page+1 < $scope.pages){
+			$scope.page++;
+			$scope.getTopicPostsByPage($scope.page);
+		}
+	};
+	$scope.prevPage = function(){
+		if($scope.page > 0){
+			$scope.page--;
+			$scope.getTopicPostsByPage($scope.page);
+		}
+	};
+
+
+	$scope.sendReply = function(){
+		var data = {
+			tid: $scope.topic.id,
+			content: $scope.replyTxt
+		};
+
+		$http.post("/api/post", data).then(function(response) {
+			var post = response.data;
+			post.user = AppService.user;
+			$scope.posts.push(post);
+
+			$scope.replyTxt = "";
+		}, function(e){
+			AppService.showErrorAlert(e.data);
+		});
+	};
+
+	$scope.closeModal = function(){
+		$("#topicModal").hide(200);
 	};
 
 });

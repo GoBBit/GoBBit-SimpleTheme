@@ -93,3 +93,29 @@ a.community:hover{
 	background-color: #f34248;
 }
 
+.pagination ul{
+	background-color:white;
+}
+.pagination li{
+	background-color:white;
+	float: left;
+}
+
+
+.topicmodal{
+	padding:20px;
+	width:100%;
+	height:100%;
+	overflow: auto;
+	position:fixed;
+	top:0px;
+	background-color: white;
+	z-index: 101;
+}
+
+.closemodal{
+	position: fixed;
+	right: 30px;
+	font-size: large;
+}
+

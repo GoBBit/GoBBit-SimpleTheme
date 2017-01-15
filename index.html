@@ -168,7 +168,8 @@
 
 		<!-- Topic content (messages..) -->
 		<!-- TODO: It must be a modal! -->
-		<center ng-controller="topic" ng-init="topic={};tid='';posts=[];">
+		<center id="topicModal" class="topicmodal hide" ng-controller="topic" ng-init="topic={};tid='';posts=[];page=0;pages=0;">
+			<a class="closemodal" ng-click="closeModal()" href="#!">{{ translation.close }}</a>
 			<div class="width-80">
 				<h2>{{ topic.title }}</h2>
 				<div class="row">
@@ -190,6 +191,36 @@
 						</div>
 						<div class="col col-9">
 							{{ p.content }}
+						</div>
+					</div>
+				</div>
+
+				<nav class="pagination centered">
+				    <ul>
+				        <li class="prev"><a href="#!" ng-click="prevPage()">&larr;</a></li>
+				        <li>
+				            <ul>
+				                <li ng-repeat="i in rangeSimple(1, pages, 1)"><a href="#!" ng-click="getTopicPostsByPage(i-1)">{{ i }}</a></li>
+				            </ul>
+				        </li>
+				        <li class="next"><a href="#!" ng-click="nextPage()">&rarr;</a></li>
+				    </ul>
+				</nav>
+
+				<!-- post reply -->
+				<div class="row centered">
+					<div class="col col-5" style="height:200px;">
+						<h4>{{ translation.reply }}</h4>
+						<textarea ng-model="replyTxt" style="height:200px;max-height:200px;"></textarea>
+
+						<br>
+						<button ng-click="sendReply()" ng-disabled="!user.username" class="button primary">{{ translation.reply }}</button>
+					</div>
+
+					<div class="col col-5">
+						<h4>{{ translation.preview }}</h4>
+						<!-- preview (TODO) -->
+						<div style="max-height:200px;height:200px;overflow:auto;">
 						</div>
 					</div>
 				</div>
