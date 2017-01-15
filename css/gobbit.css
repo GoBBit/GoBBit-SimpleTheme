@@ -52,6 +52,7 @@ a.community:hover{
 }
 
 .blurcontent {
+	position: relative;
 	padding: 20px;
 	background: rgb(34,34,34); /* for IE */
 	background: rgba(34,34,34,0.75);
@@ -74,3 +75,21 @@ a.community:hover{
 	-webkit-filter: blur(10px);
 	filter: blur(10px);
 }
+
+.follow_community_btn{
+	position:absolute;
+	top: 5px;
+	right: 5px;
+}
+
+.button.red {
+	color: #f34248;
+	border-color: #f34248;
+}
+
+.button.red:hover {
+	color: #fff;
+	border-color: #fff;
+	background-color: #f34248;
+}
+

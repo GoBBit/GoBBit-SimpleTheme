@@ -84,7 +84,7 @@
 		</center>
 
 		<!-- Communities Dropdown -->
-		<div style="left: 10%;position: relative;">
+		<div style="left: 10%;position: relative;margin:5px">
 			<button data-component="dropdown" data-target="#communities-dropdown">Communities<span class="caret down"></span></button>
 		</div>
 		<div class="dropdown" id="communities-dropdown">
@@ -121,6 +121,15 @@
 					</div>
 				</div>
 
+				<div class="follow_community_btn">
+					<button ng-if="user.followed_communities.indexOf(community.slug) < 0" class="button inverted outline" ng-click="followCommunity(community.slug)">
+						{{ translation.follow }}
+					</button>
+					<button ng-if="user.followed_communities.indexOf(community.slug) >= 0" class="button red outline" ng-click="unfollowCommunity(community.slug)">
+						{{ translation.unfollow }}
+					</button>
+				</div>
+
 			</div>
 		</center>
 
@@ -131,18 +140,22 @@
 			        <tr>
 			            <th class="width-50">{{ translation.title }}</th>
 			            <th class="width-30">{{ translation.community }}</th>
-			            <th class="width-20">{{ translation.username }}</th>
+			            <th class="width-20">{{ translation.last_update }}</th>
 			        </tr>
 			    </thead>
 			    <tbody>
 			        <tr ng-repeat="t in topics">
-			            <td class="width-50">{{ t.title }}</td>
+			            <td class="width-50">
+			            	<b><a href="#!">{{ t.title }}</a></b>
+			            	<br>
+			            	<a href="#!" style="color:black;font-size:12px">{{ t.user.username }}</a>
+			            </td>
 			            <td class="width-30">
-			            	<a href="#!">
+			            	<a href="#!" ng-click="setCommunityBySlug(t.community)">
 			            		{{ t.community }}
 			            	</a>
 			            </td>
-			            <td class="width-20">{{ t.user.username }}</td>
+			            <td class="width-20">{{ formatDate(t.last_update) }}</td>
 			        </tr>
 			    </tbody>
 			</table>

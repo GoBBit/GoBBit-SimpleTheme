@@ -4,6 +4,8 @@
 	"logout": "Log Out",
 	"close":"Close",
 	"delete":"Delete",
+	"follow":"Follow",
+	"unfollow":"Unfollow",
 
 	"recent": "Recent",
 	"home": "Home",
@@ -13,6 +15,7 @@
 	"title": "Title",
 	"community": "Community",
 	"username": "Username",
+	"last_update": "Last update",
 
 	"password_does_not_match": "Passwords does not match!"
 }

@@ -72,6 +72,18 @@ myApp.controller('App', function($scope, $http, AppService) {
 		$scope.getCommunityTopics(c, 0);
 	};
 
+	$scope.setCommunityBySlug = function(c){
+		for(i in $scope.communities)
+		{
+			var com = $scope.communities[i];
+			if(com.slug == c)
+			{
+				$scope.setCommunity(i);
+				return;
+			}
+		}
+	};
+
 	$scope.getCommunities = function(){
 		$http.get("/api/communities").then(function(response) {
 	      $scope.communities = response.data;
@@ -80,6 +92,23 @@ myApp.controller('App', function($scope, $http, AppService) {
 		});
 	};
 	$scope.getCommunities();
+
+	$scope.followCommunity = function(c){
+		$http.post("/api/user/follow/community?c="+ c).then(function(response) {
+			$scope.user.followed_communities.push(c);
+		}, function(e){
+			AppService.showErrorAlert(e.data);
+		});
+	};
+
+	$scope.unfollowCommunity = function(c){
+		$http.delete("/api/user/follow/community?c="+ c).then(function(response) {
+			var idx = $scope.user.followed_communities.indexOf(c);
+			$scope.user.followed_communities.splice(idx, 1);
+		}, function(e){
+			AppService.showErrorAlert(e.data);
+		});
+	};
 
 
 	$scope.formatDate = function(t){
