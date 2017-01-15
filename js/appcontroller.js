@@ -135,6 +135,38 @@ myApp.controller('App', function($scope, $http, AppService) {
 		window.dispatchEvent(evt);
 	};
 
+	$scope.searchTopic = function(tid){
+		for(i in $scope.topics){
+			var t = $scope.topics[i];
+			if(t.id == tid){
+				return i;
+			}
+		}
+	};
+
+	$scope.deleteTopic = function(tid){
+		$http.delete("/api/topic?tid="+ tid).then(function(response) {
+			var idx = $scope.searchTopic(tid);
+			$scope.topics.splice(idx, 1);
+		}, function(e){
+			AppService.showErrorAlert(e.data);
+		});
+	};
+
+	$scope.isMod = function(c, uid){
+		var cc = null;
+		for(i in $scope.communities)
+		{
+			var com = $scope.communities[i];
+			if(com.slug == c)
+			{
+				cc = com;
+				break;
+			}
+		}
+		return (cc && (cc.mods.indexOf(uid) >= 0))
+	};
+
 	$scope.openTopicComposer = function(){
 		$("#topicComposerModal").show(200);
 	};

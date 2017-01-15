@@ -141,8 +141,9 @@
 				<thead>
 			        <tr>
 			            <th class="width-50">{{ translation.title }}</th>
-			            <th class="width-30">{{ translation.community }}</th>
+			            <th class="width-25">{{ translation.community }}</th>
 			            <th class="width-20">{{ translation.last_update }}</th>
+			            <th class="width-5"></th>
 			        </tr>
 			    </thead>
 			    <tbody>
@@ -158,6 +159,10 @@
 			            	</a>
 			            </td>
 			            <td class="width-20">{{ formatDate(t.last_update) }}</td>
+			            <!-- Actions column -->
+			            <td>
+			            	<a ng-if="user.isadmin || (user.id == t.uid) || isMod(user.id, t.community)" ng-click="deleteTopic(t.id)" href="#!"><i class="fa fa-trash" aria-hidden="true"></i></a>
+			            </td>
 			        </tr>
 			    </tbody>
 			</table>
