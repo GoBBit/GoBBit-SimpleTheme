@@ -66,6 +66,25 @@ myApp.controller('App', function($scope, $http, AppService) {
 		});
 	};
 
+	$scope.loadMoreTopics = function(){
+		var c = $scope.community? $scope.community.slug : null;
+		var start = $scope.topics.length;
+
+		if(c){
+			$http.get("/api/community/topics?c="+ c +"&start="+ start).then(function(response) {
+		      $scope.topics.concat(response.data);
+			}, function(e){
+				// error
+			});
+		}else{
+			$http.get("/api/user/home?start="+ start).then(function(response) {
+		      $scope.topics.concat(response.data);
+			}, function(e){
+				// error
+			});
+		}
+	};
+
 	$scope.setCommunity = function(idx){
 		$scope.community = $scope.communities[idx];
 		var c = $scope.community.slug;

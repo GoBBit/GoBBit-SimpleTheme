@@ -6,6 +6,7 @@
 	"delete":"Delete",
 	"follow":"Follow",
 	"unfollow":"Unfollow",
+	"load_more":"Load more",
 
 	"recent": "Recent",
 	"home": "Home",
