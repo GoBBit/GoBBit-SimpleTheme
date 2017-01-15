@@ -8,9 +8,11 @@
 	"unfollow":"Unfollow",
 	"load_more":"Load more",
 	"reply":"Reply",
+	"send":"Send",
 	"preview":"Preview",
 	"select_community": "Select community",
 	"new_topic":"New topic",
+	"new_community":"New community",
 
 	"recent": "Recent",
 	"home": "Home",
@@ -18,6 +20,8 @@
 	"created":"Created",
 
 	"title": "Title",
+	"description": "Description",
+	"picture": "Picture",
 	"community": "Community",
 	"username": "Username",
 	"last_update": "Last update",

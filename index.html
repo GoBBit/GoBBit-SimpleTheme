@@ -87,7 +87,9 @@
 		<div style="left: 10%;position: relative;margin:5px">
 			<button data-component="dropdown" data-target="#communities-dropdown">Communities<span class="caret down"></span></button>
 
-			<button ng-click="openTopicComposer()" class="button primary">{{ translation.new_topic }}</button>
+			<button ng-click="openTopicComposer()" ng-disabled="!user.username" class="button primary">{{ translation.new_topic }}</button>
+
+			<button ng-click="openCommunityCreator()" ng-if="user.username && user.isadmin" class="button primary">{{ translation.new_community }}</button>
 		</div>
 		<div class="dropdown" id="communities-dropdown">
 			<center>
@@ -264,7 +266,7 @@
 						<textarea ng-model="contentTxt" style="height:200px;max-height:200px;"></textarea>
 
 						<br>
-						<button ng-click="sendTopic()" ng-disabled="!user.username" class="button primary">{{ translation.reply }}</button>
+						<button ng-click="sendTopic()" ng-disabled="!user.username" class="button primary">{{ translation.send }}</button>
 					</div>
 
 					<div class="col col-5">
@@ -272,6 +274,37 @@
 						<!-- preview (TODO) -->
 						<div style="max-height:200px;height:200px;overflow:auto;">
 						</div>
+					</div>
+				</div>
+
+			</div>
+		</center>
+
+
+		<!-- Community Creator Modal -->
+		<center id="communityCreatorModal" class="topicmodal hide" ng-controller="community-creator" ng-init="name='';">
+			<a class="closemodal" ng-click="closeModal()" href="#!">{{ translation.close }}</a>
+			<div class="width-80">
+				<!-- Communities Dropdown -->
+				<div align="left" style="margin:5px">
+					<!-- Name -->
+					<input type="text" class="width-50" placeholder="{{ translation.title }}" ng-model="nameTxt"/>
+					<br>
+					<input type="text" class="width-50" placeholder="{{ translation.picture }}" ng-model="pictureTxt"/>
+				</div>
+
+				<!-- content composer -->
+				<div class="row centered">
+					<div class="col col-5" style="height:200px;">
+						<h4>{{ translation.description }}</h4>
+						<textarea ng-model="descriptionTxt" style="height:200px;max-height:200px;"></textarea>
+
+						<br>
+						<button ng-click="sendCommunity()" ng-disabled="!user.username || !user.isadmin" class="button primary">{{ translation.send }}</button>
+					</div>
+
+					<div class="col col-5">
+						
 					</div>
 				</div>
 
@@ -292,5 +325,6 @@
 	<script type="text/javascript" src="/js/registercontroller.js"></script>
 	<script type="text/javascript" src="/js/topiccontroller.js"></script>
 	<script type="text/javascript" src="/js/topic-composercontroller.js"></script>
+	<script type="text/javascript" src="/js/community-creatorcontroller.js"></script>
 
 </body>

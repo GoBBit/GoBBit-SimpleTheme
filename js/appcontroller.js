@@ -37,6 +37,13 @@ myApp.controller('App', function($scope, $http, AppService) {
 		//AppService.showErrorAlert(e.data);
 	});
 
+	$scope.init = function(){
+		window.addEventListener('communities:load', function(evt){
+			$scope.getCommunities();
+		});
+	};
+	$scope.init();
+
 
 	$scope.changeLanguage = function(){
 
@@ -88,7 +95,19 @@ myApp.controller('App', function($scope, $http, AppService) {
 	$scope.setCommunity = function(idx){
 		$scope.community = $scope.communities[idx];
 		var c = $scope.community.slug;
+		$scope.getCommunity(c, function(r){
+			// refresh community info
+			$scope.communities[idx] = $scope.community = r.data;
+		});
 		$scope.getCommunityTopics(c, 0);
+	};
+
+	$scope.getCommunity = function(c, cb){
+		$http.get("/api/community?c="+ c).then(function(response) {
+	      cb(response);
+		}, function(e){
+			// error
+		});
 	};
 
 	$scope.setCommunityBySlug = function(c){
@@ -169,6 +188,10 @@ myApp.controller('App', function($scope, $http, AppService) {
 
 	$scope.openTopicComposer = function(){
 		$("#topicComposerModal").show(200);
+	};
+
+	$scope.openCommunityCreator = function(){
+		$("#communityCreatorModal").show(200);
 	};
 
 
