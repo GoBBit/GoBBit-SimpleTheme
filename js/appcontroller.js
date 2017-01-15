@@ -110,6 +110,12 @@ myApp.controller('App', function($scope, $http, AppService) {
 		});
 	};
 
+	$scope.loadTopic = function(tid){
+		var evt = new Event('topic:load');
+		evt.tid = tid;
+		window.dispatchEvent(evt);
+	};
+
 
 	$scope.formatDate = function(t){
 		return moment(t).fromNow();

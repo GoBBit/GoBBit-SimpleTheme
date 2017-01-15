@@ -146,7 +146,7 @@
 			    <tbody>
 			        <tr ng-repeat="t in topics">
 			            <td class="width-50">
-			            	<b><a href="#!">{{ t.title }}</a></b>
+			            	<b><a href="#!" ng-click="loadTopic(t.id)">{{ t.title }}</a></b>
 			            	<br>
 			            	<a href="#!" style="color:black;font-size:12px">{{ t.user.username }}</a>
 			            </td>
@@ -161,6 +161,42 @@
 			</table>
 		</center>
 
+
+
+
+		<!-- Topic content (messages..) -->
+		<!-- TODO: It must be a modal! -->
+		<center ng-controller="topic" ng-init="topic={};tid='';posts=[];">
+			<div class="width-80">
+				<h2>{{ topic.title }}</h2>
+				<div class="row">
+					<div class="col col-3">
+						<img ng-src="{{ topic.user.picture }}">
+						<a href="#!">{{ topic.user.username }}</a>
+					</div>
+					<div class="col col-9">
+						{{ topic.content }}
+					</div>
+				</div>
+
+				<!-- topic posts -->
+				<div>
+					<div class="row" ng-repeat="p in posts">
+						<div class="col col-3">
+							<img ng-src="{{ p.user.picture }}">
+							<a href="#!">{{ p.user.username }}</a>
+						</div>
+						<div class="col col-9">
+							{{ p.content }}
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</center>
+
+
+
 	</div>
 
 	<script type="text/javascript">
@@ -171,5 +207,6 @@
 	<script type="text/javascript" src="/js/appcontroller.js"></script>
 	<script type="text/javascript" src="/js/logincontroller.js"></script>
 	<script type="text/javascript" src="/js/registercontroller.js"></script>
+	<script type="text/javascript" src="/js/topiccontroller.js"></script>
 
 </body>
