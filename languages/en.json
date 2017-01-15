@@ -9,6 +9,8 @@
 	"load_more":"Load more",
 	"reply":"Reply",
 	"preview":"Preview",
+	"select_community": "Select community",
+	"new_topic":"New topic",
 
 	"recent": "Recent",
 	"home": "Home",

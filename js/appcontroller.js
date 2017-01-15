@@ -135,6 +135,10 @@ myApp.controller('App', function($scope, $http, AppService) {
 		window.dispatchEvent(evt);
 	};
 
+	$scope.openTopicComposer = function(){
+		$("#topicComposerModal").show(200);
+	};
+
 
 	$scope.formatDate = function(t){
 		return moment(t).fromNow();
