@@ -179,28 +179,62 @@
 		<center id="topicModal" class="topicmodal hide" ng-controller="topic" ng-init="topic={};tid='';posts=[];page=0;pages=0;">
 			<a class="closemodal" ng-click="closeModal()" href="#!">{{ translation.close }}</a>
 			<div class="width-80">
+				<nav class="pagination centered">
+				    <ul>
+				        <li class="prev"><a href="#!" ng-click="prevPage()">&larr;</a></li>
+				        <li>
+				            <ul>
+				                <li ng-repeat="i in rangeSimple(1, pages, 1)"><a href="#!" ng-click="getTopicPostsByPage(i-1)">{{ i }}</a></li>
+				            </ul>
+				        </li>
+				        <li class="next"><a href="#!" ng-click="nextPage()">&rarr;</a></li>
+				    </ul>
+				</nav>
+
 				<h2>{{ topic.title }}</h2>
-				<div class="row">
-					<div class="col col-3">
-						<img ng-src="{{ topic.user.picture }}">
+				<div align="left" class="row post">
+					<div class="col col-2">
+						<img class="avatar" ng-src="{{ topic.user.picture }}">
+						<br>
 						<a href="#!">{{ topic.user.username }}</a>
 					</div>
-					<div class="col col-9">
+					<div class="col col-10" style="backgroun-color:#f4f4f4;">
 						{{ topic.content }}
+
+						<div align="right" style="color:grey">
+							<i>{{ formatDate(topic.creation_date) }}</i>
+
+						</div>
 					</div>
+					<hr>
 				</div>
 
 				<!-- topic posts -->
-				<div>
-					<div class="row" ng-repeat="p in posts">
-						<div class="col col-3">
-							<img ng-src="{{ p.user.picture }}">
+				<div align="left">
+					<div class="row post" ng-repeat="p in posts">
+						<div class="col col-2">
+							<img class="avatar" ng-src="{{ p.user.picture }}">
+							<br>
 							<a href="#!">{{ p.user.username }}</a>
 						</div>
-						<div class="col col-9">
-							{{ p.content }}
+						<div class="col col-10">
+							<div align="right">
+								<!-- Post Actions -->
+								<a ng-if="user.isadmin || (user.id == p.uid) || isMod(user.id, t.community)" class="action-link" href="#!"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+								<a ng-if="user.isadmin || (user.id == p.uid) || isMod(user.id, t.community)" ng-click="deletePost(p.id)" class="action-link" href="#!"><i class="fa fa-trash" aria-hidden="true"></i></a>
+							</div>
+
+							<div>
+								{{ p.content }}
+							</div>
+
+
+							<div align="right" style="color:grey">
+								<i>{{ formatDate(p.creation_date) }}</i>
+							</div>
 						</div>
 					</div>
+					<hr>
 				</div>
 
 				<nav class="pagination centered">

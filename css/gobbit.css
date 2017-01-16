@@ -119,3 +119,20 @@ a.community:hover{
 	font-size: large;
 }
 
+.avatar{
+	width:80px;
+	height:80px;
+}
+
+.post{
+	border: none;
+	border-bottom: 1px solid grey;
+	margin:50px;
+	margin-top: 0px;
+}
+
+.action-link{
+	font-size: 25px;
+	padding: 10px;
+}
+

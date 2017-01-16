@@ -67,6 +67,24 @@ myApp.controller('topic', function($scope, $http, AppService) {
 		});
 	};
 
+	$scope.searchPost = function(pid){
+		for(i in $scope.posts){
+			var p = $scope.posts[i];
+			if(p.id == pid){
+				return i;
+			}
+		}
+	};
+
+	$scope.deletePost = function(pid){
+		$http.delete("/api/post?pid="+ pid).then(function(response) {
+			var p = $scope.searchPost(pid);
+			$scope.posts.splice(p, 1);
+		}, function(e){
+			AppService.showErrorAlert(e.data);
+		});
+	};
+
 	$scope.closeModal = function(){
 		$("#topicModal").hide(200);
 	};
