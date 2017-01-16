@@ -296,18 +296,18 @@
 
 				<!-- content composer -->
 				<div class="row centered">
-					<div class="col col-5" style="height:200px;">
-						<h4>{{ translation.reply }}</h4>
-						<textarea ng-change="updatePreview(contentTxt)" ng-model="contentTxt" style="height:200px;max-height:200px;"></textarea>
+					<div class="col col-5" style="height:80%;">
+						<h4>{{ translation.content }}</h4>
+						<textarea ng-change="updatePreview(contentTxt)" ng-model="contentTxt" style="height:80%;max-height:80%;"></textarea>
 
 						<br>
 						<button ng-click="sendTopic()" ng-disabled="!user.username" class="button primary">{{ translation.send }}</button>
 					</div>
 
-					<div class="col col-5">
+					<div class="col col-5" style="height:80%;">
 						<h4>{{ translation.preview }}</h4>
 						<!-- preview (TODO) -->
-						<div ng-bind-html="contentPreview" style="max-height:200px;height:200px;overflow:auto;">
+						<div ng-bind-html="contentPreview" style="height:80%;max-height:80%;overflow:auto;">
 						</div>
 					</div>
 				</div>
