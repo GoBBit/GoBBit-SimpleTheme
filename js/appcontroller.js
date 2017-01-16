@@ -231,18 +231,7 @@ myApp.controller('App', function($scope, $http, AppService) {
 	};
 
 	AppService.parseText = $scope.parseText = function(text){
-		// Simple parser for Markdown
-		// parse links
-		text = text.replace(/(https?:\/\/[^ ]+)/gi, '<a href="$1" target="_blank">$1</a>');
-		// parse newlines
-		text = text.replace(/\n+/gi, '<br>');
-		// parse markdown bold
-		text = text.replace(/(\*\*|__)(.*?)\1/gi, '<b>$2</b>');
-		// parse markdown italic
-		text = text.replace(/(\*|_)(.*?)\1/gi, '<em>$2</em>');
-		// parse markdown code
-		text = text.replace(/`(.*?)`/gi, '<code>$1</code>');
-
+		text = markdown.toHTML(text);
 		return text;
 	};
 

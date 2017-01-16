@@ -14,6 +14,7 @@
 	<script src="/js/vendor/kube.min.js"></script>
 	<script src="/js/vendor/moment.js"></script>
 	<script src="/js/vendor/angular.min.js"></script>
+	<script src="/js/vendor/markdown.min.js"></script>
 
 </head>
 
@@ -22,7 +23,7 @@
 	<div ng-controller="App" ng-init="user={};topics=[];communities=[];community=null;">
 
 		<div id="navbar" class="sticky">
-			<nav id="navbar-main" class="row">
+			<nav id="navbar-main" class="row menu">
 				<ul class="col col-10" style="display: block;list-style-type: none;">
 					<li><a ng-click="getHomeTopics(0)" href="#!">{{ translation.home }}</a></li>
 					<li><a href="#!">{{ translation.recent }}</a></li>
@@ -199,7 +200,8 @@
 						<a href="#!">{{ topic.user.username }}</a>
 					</div>
 					<div class="col col-10" style="backgroun-color:#f4f4f4;">
-						{{ topic.content }}
+						<div ng-bind-html="parsePost(topic.content)">
+						</div>
 
 						<div align="right" style="color:grey">
 							<i>{{ formatDate(topic.creation_date) }}</i>
@@ -224,8 +226,7 @@
 								<a ng-if="user.isadmin || (user.id == p.uid) || isMod(user.id, t.community)" ng-click="deletePost(p.id)" class="action-link" href="#!"><i class="fa fa-trash" aria-hidden="true"></i></a>
 							</div>
 
-							<div>
-								{{ p.content }}
+							<div ng-bind-html="parsePost(p.content)">
 							</div>
 
 
@@ -253,7 +254,7 @@
 				<div class="row centered">
 					<div class="col col-5" style="height:200px;">
 						<h4>{{ translation.reply }}</h4>
-						<textarea ng-model="replyTxt" style="height:200px;max-height:200px;"></textarea>
+						<textarea ng-change="updatePreview(replyTxt)" ng-model="replyTxt" style="height:200px;max-height:200px;"></textarea>
 
 						<br>
 						<button ng-click="sendReply()" ng-disabled="!user.username" class="button primary">{{ translation.reply }}</button>
@@ -262,7 +263,7 @@
 					<div class="col col-5">
 						<h4>{{ translation.preview }}</h4>
 						<!-- preview (TODO) -->
-						<div style="max-height:200px;height:200px;overflow:auto;">
+						<div ng-bind-html="contentPreview" style="max-height:200px;height:200px;overflow:auto;">
 						</div>
 					</div>
 				</div>
@@ -297,7 +298,7 @@
 				<div class="row centered">
 					<div class="col col-5" style="height:200px;">
 						<h4>{{ translation.reply }}</h4>
-						<textarea ng-model="contentTxt" style="height:200px;max-height:200px;"></textarea>
+						<textarea ng-change="updatePreview(contentTxt)" ng-model="contentTxt" style="height:200px;max-height:200px;"></textarea>
 
 						<br>
 						<button ng-click="sendTopic()" ng-disabled="!user.username" class="button primary">{{ translation.send }}</button>
@@ -306,7 +307,7 @@
 					<div class="col col-5">
 						<h4>{{ translation.preview }}</h4>
 						<!-- preview (TODO) -->
-						<div style="max-height:200px;height:200px;overflow:auto;">
+						<div ng-bind-html="contentPreview" style="max-height:200px;height:200px;overflow:auto;">
 						</div>
 					</div>
 				</div>

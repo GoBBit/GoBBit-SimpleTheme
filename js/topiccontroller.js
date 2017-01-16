@@ -1,4 +1,4 @@
-myApp.controller('topic', function($scope, $http, AppService) {
+myApp.controller('topic', function($scope, $http, AppService, $sce) {
 	$scope.postsPerPage = 20;
 	
 	$scope.init = function(){
@@ -83,6 +83,26 @@ myApp.controller('topic', function($scope, $http, AppService) {
 		}, function(e){
 			AppService.showErrorAlert(e.data);
 		});
+	};
+
+
+	$scope.parsePost = function(text){
+		if(!text)
+		{
+			return text;
+		}
+		
+		text = $sce.trustAsHtml( AppService.parseText(text) );
+		return text;
+	};
+
+	$scope.updatePreview = function(text){
+		if(!text)
+		{
+			return text;
+		}
+		
+		$scope.contentPreview = $sce.trustAsHtml( AppService.parseText(text) );
 	};
 
 	$scope.closeModal = function(){

@@ -1,4 +1,4 @@
-myApp.controller('topic-composer', function($scope, $http, AppService) {
+myApp.controller('topic-composer', function($scope, $http, AppService, $sce) {
 	
 	$scope.init = function(){
 	};
@@ -25,6 +25,15 @@ myApp.controller('topic-composer', function($scope, $http, AppService) {
 		}, function(e){
 			AppService.showErrorAlert(e.data);
 		});
+	};
+
+	$scope.updatePreview = function(text){
+		if(!text)
+		{
+			return text;
+		}
+		
+		$scope.contentPreview = $sce.trustAsHtml( AppService.parseText(text) );
 	};
 
 	$scope.closeModal = function(){

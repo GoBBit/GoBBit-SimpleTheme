@@ -1,16 +1,19 @@
+.menu{
+	margin: 0px;
+}
 
-ul {
-	margin: 0;
-	padding: 0;
+.menu ul {
+	margin: 0px;
+	padding: 0px;
 	overflow: hidden;
 	background-color: grey;
 }
 
-li {
+.menu li {
 	float: left;
 }
 
-li a {
+.menu li a {
 	display: block;
 	color: white;
 	text-align: center;
@@ -18,7 +21,7 @@ li a {
 	text-decoration: none;
 }
 
-li a:hover{
+.menu li a:hover{
 	color: white;
 	background-color: #111;
 }
