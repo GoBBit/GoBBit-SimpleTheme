@@ -79,13 +79,13 @@ myApp.controller('App', function($scope, $http, AppService) {
 
 		if(c){
 			$http.get("/api/community/topics?c="+ c +"&start="+ start).then(function(response) {
-		      $scope.topics.concat(response.data);
+		      $scope.topics = $scope.topics.concat(response.data);
 			}, function(e){
 				// error
 			});
 		}else{
 			$http.get("/api/user/home?start="+ start).then(function(response) {
-		      $scope.topics.concat(response.data);
+		      $scope.topics = $scope.topics.concat(response.data);
 			}, function(e){
 				// error
 			});
