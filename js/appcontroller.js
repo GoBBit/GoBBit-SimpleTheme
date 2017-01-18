@@ -249,8 +249,14 @@ myApp.controller('App', function($scope, $http, AppService) {
 	    return input;
 	};
 
+	AppService.parseMention = function(text){
+		// parse @username mention
+		return text.replace(/\B\@([\w\-]+)/gim, "<a onclick='loadUser(\"$1\")' href='#!'>@$1</a>");
+	};
+
 	AppService.parseText = $scope.parseText = function(text){
 		text = markdown.toHTML(text);
+		text = AppService.parseMention(text);
 		return text;
 	};
 
@@ -267,9 +273,11 @@ myApp.controller('App', function($scope, $http, AppService) {
 	}
 });
 
-
-
-
-
+// Used on mentions..
+loadUser = function(uslug){
+	var evt = new Event('user:load');
+	evt.uslug = uslug;
+	window.dispatchEvent(evt);
+};
 
 

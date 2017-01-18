@@ -366,7 +366,7 @@
 
 				<!-- action buttons -->
 				<div style="padding-bottom: 20px;">
-					<button ng-if="!user.ignored_users || user.ignored_users.indexOf(userprofile.id) < 0" class="button red outline" ng-click="ignoreUser(userprofile.id)">
+					<button ng-if="user.ignored_users.indexOf(userprofile.id) < 0" class="button red outline" ng-click="ignoreUser(userprofile.id)">
 						{{ translation.ignore }}
 					</button>
 					<button ng-if="user.ignored_users.indexOf(userprofile.id) >= 0" class="button red" ng-click="unIgnoreUser(userprofile.id)">
