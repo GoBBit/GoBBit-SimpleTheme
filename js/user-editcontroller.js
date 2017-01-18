@@ -4,7 +4,6 @@ myApp.controller('user-edit', function($scope, $http, AppService) {
 		window.addEventListener('user:edit', function(evt){
 			$scope.uslug = evt.uslug || AppService.user.slug;
 			$scope.getUserInfo($scope.uslug);
-
 			// if is admin modifying another user
 			$scope.isAnotherUser = ($scope.uslug != AppService.user.slug);
 
@@ -30,6 +29,7 @@ myApp.controller('user-edit', function($scope, $http, AppService) {
 	$scope.renderUserInfo = function(uslug){
 		$scope.picture = $scope.userprofile.picture;
 		$scope.email = $scope.userprofile.email;
+		$scope.uu.isadmin = $scope.userprofile.isadmin;
 	};
 
 	$scope.updateUser = function(){
@@ -41,6 +41,7 @@ myApp.controller('user-edit', function($scope, $http, AppService) {
 		var endpoint = "/api/me";
 		if($scope.isAnotherUser){
 			endpoint = "/api/user?u="+ $scope.userprofile.slug;
+			data.isadmin = $scope.uu.isadmin;
 		}
 
 		$http.put(endpoint, data).then(function(response) {

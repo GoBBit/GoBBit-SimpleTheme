@@ -41,6 +41,7 @@
 	"email": "Email",
 	"user_data": "User data",
 	"change_password": "Change Password",
+	"admin": "Admin",
 
 	"password_does_not_match": "Passwords does not match!"
 }

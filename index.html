@@ -362,6 +362,8 @@
 				<img class="profile-avatar" ng-src="{{ userprofile.picture }}">
 				<h1>{{ userprofile.username }}</h1>
 
+				<span ng-if="userprofile.isadmin" class="label primary outline"><a href="#">{{ translation.admin }}</a></span>
+
 				<p><b>{{ translation.registered }}</b>: {{ formatDateComplete(userprofile.creation_Date) }}</p>
 
 				<!-- action buttons -->
@@ -429,7 +431,7 @@
 
 
 		<!-- User Edit Modal -->
-		<center id="userEditModal" class="topicmodal hide" ng-controller="user-edit" ng-init="slug='';userprofile='';">
+		<center id="userEditModal" class="topicmodal hide" ng-controller="user-edit" ng-init="slug='';userprofile='';uu={}">
 			<a class="closemodal" ng-click="closeModal()" href="#!">{{ translation.close }}</a>
 			<div class="width-80">
 
@@ -449,6 +451,10 @@
 					<div class="form-item">
 						<label>{{ translation.email }}</label>
 						<input type="text" style="width:90%;" ng-model="email" placeholder="{{ translation.email }}">
+					</div>
+
+					<div ng-if="user.isadmin" class="form-item">
+						<label><input type="checkbox" ng-model="uu.isadmin"> {{ translation.admin }}</label>
 					</div>
 
 					<br>
