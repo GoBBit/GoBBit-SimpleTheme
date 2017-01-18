@@ -204,7 +204,7 @@
 					<div class="col col-2">
 						<img class="avatar" ng-src="{{ topic.user.picture }}">
 						<br>
-						<a href="#!">{{ topic.user.username }}</a>
+						<a ng-click="loadUser(topic.user.slug)" href="#!">{{ topic.user.username }}</a>
 					</div>
 					<div class="col col-10" style="backgroun-color:#f4f4f4;">
 						<div ng-bind-html="parsePost(topic.content)">
@@ -224,7 +224,7 @@
 						<div class="col col-2">
 							<img class="avatar" ng-src="{{ p.user.picture }}">
 							<br>
-							<a href="#!">{{ p.user.username }}</a>
+							<a ng-click="loadUser(p.user.slug)" href="#!">{{ p.user.username }}</a>
 						</div>
 						<div class="col col-10">
 							<div align="right">
