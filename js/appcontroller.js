@@ -41,9 +41,22 @@ myApp.controller('App', function($scope, $http, AppService) {
 		window.addEventListener('communities:load', function(evt){
 			$scope.getCommunities();
 		});
+		window.addEventListener('user:refresh', function(evt){
+			$scope.refreshUser();
+		});
 	};
 	$scope.init();
 
+	$scope.refreshUser = function(){
+		// Get user info and save
+		$http.get("/api/me").then(function(response) {
+			$scope.user = AppService.user = response.data;
+			AppService.csrf = response.data.csrf;
+		}, function(e){
+			// error
+			//AppService.showErrorAlert(e.data);
+		});
+	}
 
 	$scope.changeLanguage = function(){
 

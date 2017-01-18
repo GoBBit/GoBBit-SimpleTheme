@@ -364,6 +364,18 @@
 
 				<p><b>{{ translation.registered }}</b>: {{ formatDateComplete(userprofile.creation_Date) }}</p>
 
+				<!-- action buttons -->
+				<div style="padding-bottom: 20px;">
+					<button ng-if="!user.ignored_users || user.ignored_users.indexOf(userprofile.id) < 0" class="button red outline" ng-click="ignoreUser(userprofile.id)">
+						{{ translation.ignore }}
+					</button>
+					<button ng-if="user.ignored_users.indexOf(userprofile.id) >= 0" class="button red" ng-click="unIgnoreUser(userprofile.id)">
+						{{ translation.unignore }}
+					</button>
+					<button ng-if="user.isadmin && !userprofile.isbanned" class="button primary outline" ng-click="banUser(userprofile.id)">{{ translation.ban }}</button>
+					<button ng-if="user.isadmin && userprofile.isbanned" class="button primary" ng-click="unBanUser(userprofile.id)">{{ translation.unban }}</button>
+				</div>
+
 				<div class="row centered">
 					<div class="col-1">
 						<i class="fa fa-pencil" aria-hidden="true"></i>

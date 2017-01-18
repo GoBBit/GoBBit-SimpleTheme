@@ -32,6 +32,43 @@ myApp.controller('user-profile', function($scope, $http, AppService) {
 		});
 	};
 
+	$scope.ignoreUser = function(uid){
+		$http.post("/api/user/ignore?uid="+ uid).then(function(response) {
+			$scope.refreshUser();
+		}, function(e){
+			AppService.showErrorAlert(e.data);
+		});
+	};
+
+	$scope.unIgnoreUser = function(uid){
+		$http.delete("/api/user/ignore?uid="+ uid).then(function(response) {
+			$scope.refreshUser();
+		}, function(e){
+			AppService.showErrorAlert(e.data);
+		});
+	};
+
+	$scope.banUser = function(uid){
+		$http.post("/api/user/ban?uid="+ uid).then(function(response) {
+			$scope.userprofile.isbanned = true;
+		}, function(e){
+			AppService.showErrorAlert(e.data);
+		});
+	};
+
+	$scope.unBanUser = function(uid){
+		$http.delete("/api/user/ban?uid="+ uid).then(function(response) {
+			$scope.userprofile.isbanned = false;
+		}, function(e){
+			AppService.showErrorAlert(e.data);
+		});
+	};
+
+	$scope.refreshUser = function(){
+		var evt = new Event('user:refresh');
+		window.dispatchEvent(evt);
+	};
+
 	$scope.closeModal = function(){
 		$("#userProfileModal").hide(200);
 	};
