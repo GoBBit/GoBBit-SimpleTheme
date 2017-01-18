@@ -205,6 +205,12 @@ myApp.controller('App', function($scope, $http, AppService) {
 		window.dispatchEvent(evt);
 	};
 
+	$scope.editUser = function(uslug){
+		var evt = new Event('user:edit');
+		evt.uslug = uslug;
+		window.dispatchEvent(evt);
+	};
+
 	$scope.openTopicComposer = function(){
 		$("#topicComposerModal").show(200);
 	};

@@ -31,7 +31,7 @@
 
 				<ul class="col col-2" style="display: block;list-style-type: none;">
 					<!-- Log out and user info -->
-					<li ng-if="user.username"><a href="#!">{{ user.username }}</a></li>
+					<li ng-if="user.username" ng-click="editUser()"><a href="#!">{{ user.username }}</a></li>
 					<li ng-if="user.username"><a href="/logout">{{ translation.logout }}</a></li>
 				</ul>
 			</nav>
@@ -46,11 +46,11 @@
 				<div class="row around" ng-if="!user.username" style="padding:10px">
 					<div ng-controller="login" class="col col-6">
 						<div class="form-item">
-							<label>Username</label>
+							<label>{{ translation.username }}</label>
 							<input type="text" name="username" ng-model="username" class="width-50">
 						</div>
 						<div class="form-item">
-							<label>Password</label>
+							<label>{{ translation.password }}</label>
 							<input type="password" name="password" ng-model="password" class="width-50">
 						</div>
 
@@ -60,19 +60,19 @@
 
 					<div ng-controller="register" class="col col-6">
 						<div class="form-item">
-							<label>Username</label>
+							<label>{{ translation.username }}</label>
 							<input type="text" name="username" ng-model="username" class="width-50">
 						</div>
 						<div class="form-item">
-							<label>Email</label>
+							<label>{{ translation.email }}</label>
 							<input type="email" name="email" ng-model="email" class="width-50">
 						</div>
 						<div class="form-item">
-							<label>Password</label>
+							<label>{{ translation.password }}</label>
 							<input type="password" name="password" ng-model="password" class="width-50">
 						</div>
 						<div class="form-item">
-							<label>Repeat Password</label>
+							<label>{{ translation.repeat_password }}</label>
 							<input type="password" name="rpassword" ng-model="rpassword" class="width-50">
 						</div>
 
@@ -428,6 +428,64 @@
 
 
 
+		<!-- User Edit Modal -->
+		<center id="userEditModal" class="topicmodal hide" ng-controller="user-edit" ng-init="slug='';userprofile='';">
+			<a class="closemodal" ng-click="closeModal()" href="#!">{{ translation.close }}</a>
+			<div class="width-80">
+
+				<img class="profile-avatar" ng-src="{{ picture }}">
+				
+				<h1>{{ userprofile.username }}</h1>
+
+				<p><b>{{ translation.registered }}</b>: {{ formatDateComplete(userprofile.creation_Date) }}</p>
+
+				<fieldset style="width:50%;">
+					<legend>{{ translation.user_data }}</legend>
+					<div class="form-item">
+						<label>{{ translation.profile_picture }}</label>
+						<input type="text" style="width:90%;" ng-model="picture" placeholder="{{ translation.profile_picture }}">
+					</div>
+
+					<div class="form-item">
+						<label>{{ translation.email }}</label>
+						<input type="text" style="width:90%;" ng-model="email" placeholder="{{ translation.email }}">
+					</div>
+
+					<br>
+					<button class="button primary" ng-click="updateUser()">
+						{{ translation.update }}
+					</button>
+				</fieldset>
+
+				<fieldset style="width:50%;">
+					<legend>{{ translation.change_password }}</legend>
+					<div class="form-item">
+						<label>{{ translation.old_password }}</label>
+						<input type="password" style="width:90%;" ng-model="oldpassword" placeholder="{{ translation.old_password }}">
+					</div>
+
+					<div class="form-item">
+						<label>{{ translation.new_password }}</label>
+						<input type="password" style="width:90%;" ng-model="password" placeholder="{{ translation.new_password }}">
+					</div>
+
+					<div class="form-item">
+						<label>{{ translation.repeat_pass }}</label>
+						<input type="password" style="width:90%;" ng-model="rpassword" placeholder="{{ translation.repeat_password }}">
+					</div>
+
+					<br>
+					<button class="button primary" ng-click="updateUserPassword()">
+						{{ translation.update }}
+					</button>
+				</fieldset>
+
+
+			</div>
+		</center>
+
+
+
 	</div>
 
 	<script type="text/javascript">
@@ -442,5 +500,6 @@
 	<script type="text/javascript" src="/js/topic-composercontroller.js"></script>
 	<script type="text/javascript" src="/js/community-creatorcontroller.js"></script>
 	<script type="text/javascript" src="/js/user-profilecontroller.js"></script>
+	<script type="text/javascript" src="/js/user-editcontroller.js"></script>
 
 </body>

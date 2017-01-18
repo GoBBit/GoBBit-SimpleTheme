@@ -13,6 +13,7 @@
 	"load_more":"Load more",
 	"reply":"Reply",
 	"send":"Send",
+	"update":"Update",
 	"preview":"Preview",
 	"content":"Content",
 	"select_community": "Select community",
@@ -29,9 +30,17 @@
 	"title": "Title",
 	"description": "Description",
 	"picture": "Picture",
+	"password": "Password",
+	"new_password": "New Password",
+	"old_password": "Old Password",
+	"repeat_password": "Repeat Password",
 	"community": "Community",
 	"username": "Username",
 	"last_update": "Last update",
+	"profile_picture": "Profile picture",
+	"email": "Email",
+	"user_data": "User data",
+	"change_password": "Change Password",
 
 	"password_does_not_match": "Passwords does not match!"
 }
