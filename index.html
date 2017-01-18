@@ -376,6 +376,8 @@
 					</button>
 					<button ng-if="user.isadmin && !userprofile.isbanned" class="button primary outline" ng-click="banUser(userprofile.id)">{{ translation.ban }}</button>
 					<button ng-if="user.isadmin && userprofile.isbanned" class="button primary" ng-click="unBanUser(userprofile.id)">{{ translation.unban }}</button>
+
+					<button ng-if="user.isadmin || (userprofile.id == user.id)" class="button outline" ng-click="editUser(userprofile.slug)">{{ translation.edit }}</button>
 				</div>
 
 				<div class="row centered">
