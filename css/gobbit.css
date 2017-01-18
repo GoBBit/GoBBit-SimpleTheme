@@ -127,6 +127,13 @@ a.community:hover{
 	height:80px;
 }
 
+.profile-avatar{
+	width:200px;
+	height:200px;
+	border: 2px solid grey;
+    border-radius: 30px;
+}
+
 .post{
 	border: none;
 	border-bottom: 1px solid grey;

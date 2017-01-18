@@ -186,6 +186,12 @@ myApp.controller('App', function($scope, $http, AppService) {
 		return (cc && (cc.mods.indexOf(uid) >= 0))
 	};
 
+	$scope.loadUser = function(uslug){
+		var evt = new Event('user:load');
+		evt.uslug = uslug;
+		window.dispatchEvent(evt);
+	};
+
 	$scope.openTopicComposer = function(){
 		$("#topicComposerModal").show(200);
 	};

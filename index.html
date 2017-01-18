@@ -154,7 +154,7 @@
 			            <td class="width-50">
 			            	<b><a href="#!" ng-click="loadTopic(t.id)">{{ t.title }}</a></b>
 			            	<br>
-			            	<a href="#!" style="color:black;font-size:12px">{{ t.user.username }}</a>
+			            	<a href="#!" ng-click="loadUser(t.user.slug)" style="color:black;font-size:12px">{{ t.user.username }}</a>
 			            </td>
 			            <td class="width-30">
 			            	<a href="#!" ng-click="setCommunityBySlug(t.community)">
@@ -354,6 +354,67 @@
 		</center>
 
 
+		<!-- User Profile Modal -->
+		<center id="userProfileModal" class="topicmodal hide" ng-controller="user-profile" ng-init="slug='';userprofile='';">
+			<a class="closemodal" ng-click="closeModal()" href="#!">{{ translation.close }}</a>
+			<div class="width-80">
+
+				<img class="profile-avatar" ng-src="{{ userprofile.picture }}">
+				<h1>{{ userprofile.username }}</h1>
+
+				<p><b>{{ translation.registered }}</b>: {{ formatDateComplete(userprofile.creation_Date) }}</p>
+
+				<div class="row centered">
+					<div class="col-1">
+						<i class="fa fa-pencil" aria-hidden="true"></i>
+						{{ userprofile.posts_number }}
+					</div>
+					<div class="col-1">
+						<i class="fa fa-comments" aria-hidden="true"></i>
+						{{ userprofile.topics_number }}
+					</div>
+				</div>
+
+				<br>
+				<h3>{{ translation.latest_topics }}</h3>
+				<!-- Topics table -->
+				<center>
+					<table class="striped" style="width:80%">
+						<thead>
+					        <tr>
+					            <th class="width-50">{{ translation.title }}</th>
+					            <th class="width-25">{{ translation.community }}</th>
+					            <th class="width-20">{{ translation.last_update }}</th>
+					            <th class="width-5"></th>
+					        </tr>
+					    </thead>
+					    <tbody>
+					        <tr ng-repeat="t in usertopics">
+					            <td class="width-50">
+					            	<b><a href="#!" ng-click="closeModal();loadTopic(t.id)">{{ t.title }}</a></b>
+					            </td>
+					            <td class="width-30">
+					            	<a href="#!" ng-click="setCommunityBySlug(t.community)">
+					            		{{ t.community }}
+					            	</a>
+					            </td>
+					            <td class="width-20">{{ formatDate(t.last_update) }}</td>
+					            <!-- Actions column -->
+					            <td>
+					            	<span style="padding:10px">
+					            		{{ t.posts_number }}
+					            		<i class="fa fa-pencil" aria-hidden="true"></i>
+					            	</span>
+					            </td>
+					        </tr>
+					    </tbody>
+					</table>
+				</center>
+
+			</div>
+		</center>
+
+
 
 	</div>
 
@@ -368,5 +429,6 @@
 	<script type="text/javascript" src="/js/topiccontroller.js"></script>
 	<script type="text/javascript" src="/js/topic-composercontroller.js"></script>
 	<script type="text/javascript" src="/js/community-creatorcontroller.js"></script>
+	<script type="text/javascript" src="/js/user-profilecontroller.js"></script>
 
 </body>
