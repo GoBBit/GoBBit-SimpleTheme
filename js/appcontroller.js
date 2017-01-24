@@ -81,7 +81,11 @@ myApp.controller('App', function($scope, $http, AppService) {
 		$scope.community = null;
 		$http.get("/api/user/home?start="+start).then(function(response) {
 			AppService.topicList = "home";
-	      	$scope.topics = response.data;
+	      	if(start > 0){
+				$scope.topics = $scope.topics.concat(response.data);
+			}else{
+				$scope.topics = response.data;
+			}
 		}, function(e){
 			// error
 		});
@@ -91,7 +95,11 @@ myApp.controller('App', function($scope, $http, AppService) {
 		$scope.community = null;
 		$http.get("/api/topics/recent?start="+start).then(function(response) {
 			AppService.topicList = "recent";
-	      	$scope.topics = response.data;
+			if(start > 0){
+				$scope.topics = $scope.topics.concat(response.data);
+			}else{
+				$scope.topics = response.data;
+			}
 		}, function(e){
 			// error
 		});
@@ -100,7 +108,11 @@ myApp.controller('App', function($scope, $http, AppService) {
 	$scope.getCommunityTopics = function(c, start){
 		$http.get("/api/community/topics?c="+ c +"&start="+ start).then(function(response) {
 			AppService.topicList = "community";
-			$scope.topics = response.data;
+			if(start > 0){
+				$scope.topics = $scope.topics.concat(response.data);
+			}else{
+				$scope.topics = response.data;
+			}
 		}, function(e){
 			// error
 		});
@@ -111,7 +123,7 @@ myApp.controller('App', function($scope, $http, AppService) {
 		var start = $scope.topics.length;
 
 		if(AppService.topicList == "community"){
-			$scope.getCommunityTopics(start);
+			$scope.getCommunityTopics(c, start);
 		}else if(AppService.topicList == "home"){
 			$scope.getHomeTopics(start);
 		}else{
