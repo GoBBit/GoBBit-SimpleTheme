@@ -20,6 +20,8 @@
 	"select_community": "Select community",
 	"new_topic":"New topic",
 	"new_community":"New community",
+	"delete_post_confirm":"Are you sure you want to delete this post?",
+	"delete_topic_confirm":"Are you sure you want to delete this topic?",
 
 	"recent": "Recent",
 	"home": "Home",

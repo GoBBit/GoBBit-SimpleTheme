@@ -203,6 +203,10 @@ myApp.controller('App', function($scope, $http, AppService) {
 	};
 
 	$scope.deleteTopic = function(tid){
+		var confirmation = confirm(AppService.translation["delete_topic_confirm"]);
+		if(!confirmation){
+			return;
+		}
 		$http.delete("/api/topic?tid="+ tid).then(function(response) {
 			var idx = $scope.searchTopic(tid);
 			$scope.topics.splice(idx, 1);

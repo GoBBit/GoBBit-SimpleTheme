@@ -77,6 +77,11 @@ myApp.controller('topic', function($scope, $http, AppService, $sce) {
 	};
 
 	$scope.deletePost = function(pid){
+		var confirmation = confirm(AppService.translation["delete_post_confirm"]);
+		if(!confirmation){
+			return;
+		}
+		
 		$http.delete("/api/post?pid="+ pid).then(function(response) {
 			var p = $scope.searchPost(pid);
 			$scope.posts.splice(p, 1);
