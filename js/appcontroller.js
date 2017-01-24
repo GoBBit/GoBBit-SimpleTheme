@@ -5,6 +5,7 @@ myApp.service('AppService', function(){
 	var lang, translation;
 	var csrf = "";
 	var user = {};
+	var topicList = "recent";
 
 });
 
@@ -28,13 +29,20 @@ myApp.controller('App', function($scope, $http, AppService) {
 		$scope.user = AppService.user = response.data;
 		AppService.csrf = response.data.csrf;
 
-		// load home topics
+		// load home topics or recent topics
 		$scope.getHomeTopics(0);
+		if(AppService.user.username){
+			$scope.getHomeTopics(0);
+		}else{
+			$scope.getRecentTopics(0);
+		}
 
 		$scope.allLoaded = true;
 	}, function(e){
 		// error
 		//AppService.showErrorAlert(e.data);
+		// Unauthorized, no user. Load recent topics list
+		$scope.getRecentTopics(0);
 	});
 
 	$scope.init = function(){
@@ -72,7 +80,18 @@ myApp.controller('App', function($scope, $http, AppService) {
 	$scope.getHomeTopics = function(start){
 		$scope.community = null;
 		$http.get("/api/user/home?start="+start).then(function(response) {
-	      $scope.topics = response.data;
+			AppService.topicList = "home";
+	      	$scope.topics = response.data;
+		}, function(e){
+			// error
+		});
+	};
+
+	$scope.getRecentTopics = function(start){
+		$scope.community = null;
+		$http.get("/api/topics/recent?start="+start).then(function(response) {
+			AppService.topicList = "recent";
+	      	$scope.topics = response.data;
 		}, function(e){
 			// error
 		});
@@ -80,7 +99,8 @@ myApp.controller('App', function($scope, $http, AppService) {
 
 	$scope.getCommunityTopics = function(c, start){
 		$http.get("/api/community/topics?c="+ c +"&start="+ start).then(function(response) {
-	      $scope.topics = response.data;
+			AppService.topicList = "community";
+			$scope.topics = response.data;
 		}, function(e){
 			// error
 		});
@@ -90,18 +110,12 @@ myApp.controller('App', function($scope, $http, AppService) {
 		var c = $scope.community? $scope.community.slug : null;
 		var start = $scope.topics.length;
 
-		if(c){
-			$http.get("/api/community/topics?c="+ c +"&start="+ start).then(function(response) {
-		      $scope.topics = $scope.topics.concat(response.data);
-			}, function(e){
-				// error
-			});
+		if(AppService.topicList == "community"){
+			$scope.getCommunityTopics(start);
+		}else if(AppService.topicList == "home"){
+			$scope.getHomeTopics(start);
 		}else{
-			$http.get("/api/user/home?start="+ start).then(function(response) {
-		      $scope.topics = $scope.topics.concat(response.data);
-			}, function(e){
-				// error
-			});
+			$scope.getRecentTopics(start);
 		}
 	};
 
