@@ -69,8 +69,16 @@ myApp.controller('user-profile', function($scope, $http, AppService) {
 		window.dispatchEvent(evt);
 	};
 
+	$scope.destroy = function(){
+		// "destructor" to free memory deleting properties and HTML nodes
+		$scope.uid = "";
+		$scope.userprofile = {};
+		$scope.usertopics = [];
+	};
+
 	$scope.closeModal = function(){
 		$("#userProfileModal").hide(200);
+		$scope.destroy();
 	};
 
 });

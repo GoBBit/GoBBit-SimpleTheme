@@ -105,6 +105,16 @@ myApp.controller('topic', function($scope, $http, AppService, $sce) {
 		$scope.contentPreview = $sce.trustAsHtml( AppService.parseText(text) );
 	};
 
+	$scope.destroy = function(){
+		// "destructor" to free memory deleting properties and HTML nodes
+		$scope.tid = "";
+		$scope.topic = {};
+		$scope.posts = [];
+		$scope.page = 0;
+		$scope.pages = 0;
+		$scope.replyTxt = "";
+	};
+
 	$scope.closeModal = function(){
 		$("#topicModal").hide(200);
 	};

@@ -86,8 +86,21 @@ myApp.controller('user-edit', function($scope, $http, AppService) {
 		window.dispatchEvent(evt);
 	};
 
+	$scope.destroy = function(){
+		// "destructor" to free memory deleting properties and HTML nodes
+		$scope.uid = "";
+		$scope.userignore = [];
+		$scope.userprofile = {};
+
+		$scope.password = "";
+		$scope.oldpassword = "";
+		$scope.email = "";
+		$scope.picture = "";
+	};
+
 	$scope.closeModal = function(){
 		$("#userEditModal").hide(200);
+		$scope.destroy();
 	};
 
 });
