@@ -4,6 +4,7 @@ myApp.controller('user-edit', function($scope, $http, AppService) {
 		window.addEventListener('user:edit', function(evt){
 			$scope.uslug = evt.uslug || AppService.user.slug;
 			$scope.getUserInfo($scope.uslug);
+			$scope.getUserIgnore();
 			// if is admin modifying another user
 			$scope.isAnotherUser = ($scope.uslug != AppService.user.slug);
 
@@ -30,6 +31,15 @@ myApp.controller('user-edit', function($scope, $http, AppService) {
 		$scope.picture = $scope.userprofile.picture;
 		$scope.email = $scope.userprofile.email;
 		$scope.uu.isadmin = $scope.userprofile.isadmin;
+	};
+
+	$scope.getUserIgnore = function(uslug){
+		$http.get("/api/user/ignore").then(function(response) {
+			// ignored users
+			$scope.userignore = response.data;
+		}, function(e){
+			AppService.showErrorAlert(e.data);
+		});
 	};
 
 	$scope.updateUser = function(){

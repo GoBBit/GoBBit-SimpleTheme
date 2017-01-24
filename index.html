@@ -486,6 +486,24 @@
 					</button>
 				</fieldset>
 
+				<fieldset style="width:50%;">
+					<legend>{{ translation.ignored_users }}</legend>
+					<table class="striped" style="width:80%">
+					    <tbody>
+					        <tr ng-repeat="u in userignore">
+					            <td style="width:50%;">
+					            	<img class="avatar small" ng-src="{{ u.picture }}">
+					            </td>
+					            <td>
+					            	<b>
+					            		<a href="#!" ng-click="closeModal();loadUser(u.slug)">{{ u.username }}</a>
+					            	</b>
+					            </td>
+					        </tr>
+					    </tbody>
+					</table>
+				</fieldset>
+
 
 			</div>
 		</center>
