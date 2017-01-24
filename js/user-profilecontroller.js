@@ -1,4 +1,4 @@
-myApp.controller('user-profile', function($scope, $http, AppService) {
+myApp.controller('user-profile', function($scope, $http, AppService, Ajaxify) {
 	
 	$scope.init = function(){
 		window.addEventListener('user:load', function(evt){
@@ -19,6 +19,7 @@ myApp.controller('user-profile', function($scope, $http, AppService) {
 	$scope.getUserInfo = function(uslug){
 		$http.get("/api/user?u="+ uslug).then(function(response) {
 			$scope.userprofile = response.data;
+			Ajaxify.updateUrl($scope.userprofile.username, "/?u="+ $scope.userprofile.slug);
 		}, function(e){
 			AppService.showErrorAlert(e.data);
 		});

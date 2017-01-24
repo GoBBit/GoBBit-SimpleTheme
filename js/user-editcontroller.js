@@ -1,4 +1,4 @@
-myApp.controller('user-edit', function($scope, $http, AppService) {
+myApp.controller('user-edit', function($scope, $http, AppService, Ajaxify) {
 	
 	$scope.init = function(){
 		window.addEventListener('user:edit', function(evt){
@@ -31,6 +31,8 @@ myApp.controller('user-edit', function($scope, $http, AppService) {
 		$scope.picture = $scope.userprofile.picture;
 		$scope.email = $scope.userprofile.email;
 		$scope.uu.isadmin = $scope.userprofile.isadmin;
+
+		Ajaxify.updateUrl($scope.userprofile.username, "/?u="+ $scope.userprofile.slug);
 	};
 
 	$scope.getUserIgnore = function(uslug){

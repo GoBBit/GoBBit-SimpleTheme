@@ -10,7 +10,7 @@ myApp.service('AppService', function(){
 });
 
 
-myApp.controller('App', function($scope, $http, AppService) {
+myApp.controller('App', function($scope, $http, AppService, Ajaxify) {
 	$scope.allLoaded = false;
 	// Load & setup language based on user browser lang
 	AppService.lang = $scope.lang = localStorage.getItem("lang") || navigator.language.toLowerCase().substr(0, 2) || "en";
@@ -143,7 +143,8 @@ myApp.controller('App', function($scope, $http, AppService) {
 
 	$scope.getCommunity = function(c, cb){
 		$http.get("/api/community?c="+ c).then(function(response) {
-	      cb(response);
+			Ajaxify.updateUrl(response.data.name, "/?c="+ response.data.slug);
+			cb(response);
 		}, function(e){
 			// error
 		});

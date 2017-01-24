@@ -1,4 +1,4 @@
-myApp.controller('topic', function($scope, $http, AppService, $sce) {
+myApp.controller('topic', function($scope, $http, AppService, $sce, Ajaxify) {
 	$scope.postsPerPage = 20;
 	
 	$scope.init = function(){
@@ -18,6 +18,8 @@ myApp.controller('topic', function($scope, $http, AppService, $sce) {
 	      $scope.topic = response.data;
 	      $scope.page = 0;
 	      $scope.pages = Math.floor($scope.topic.posts_number / $scope.postsPerPage) + 1;
+
+	      Ajaxify.updateUrl($scope.topic.title, "/?tid="+ $scope.topic.id);
 		}, function(e){
 			AppService.showErrorAlert(e.data);
 		});
