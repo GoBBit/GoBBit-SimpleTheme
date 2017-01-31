@@ -10,7 +10,7 @@ myApp.service('AppService', function(){
 });
 
 
-myApp.controller('App', function($scope, $http, AppService, Ajaxify) {
+myApp.controller('App', function($scope, $http, AppService, Ajaxify, EmbedCombo) {
 	$scope.allLoaded = false;
 	// Load & setup language based on user browser lang
 	AppService.lang = $scope.lang = localStorage.getItem("lang") || navigator.language.toLowerCase().substr(0, 2) || "en";
@@ -296,9 +296,15 @@ myApp.controller('App', function($scope, $http, AppService, Ajaxify) {
 		// parse @username mention
 		return text.replace(/\B\@([\w\-]+)/gim, "<a onclick='loadUser(\"$1\")' href='#!'>@$1</a>");
 	};
+	AppService.parseLink = function(text){
+		// parse @username mention
+		return text.replace(/((?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$]))/gim, "<a href=\"$1\" target='_blank'>$1</a>");
+	};
 
 	AppService.parseText = $scope.parseText = function(text){
 		text = markdown.toHTML(text);
+		text = AppService.parseLink(text);
+		text = EmbedCombo.parse(text);
 		text = AppService.parseMention(text);
 		return text;
 	};
