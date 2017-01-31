@@ -133,6 +133,10 @@
 					<button ng-if="user.followed_communities.indexOf(community.slug) >= 0" class="button red outline" ng-click="unfollowCommunity(community.slug)">
 						{{ translation.unfollow }}
 					</button>
+
+					<button ng-if="user.isadmin || community.mods.indexOf(user.id) >= 0" class="button" ng-click="editCommunity(community)">
+						<i class="fa fa-cogs" aria-hidden="true"></i>
+					</button>
 				</div>
 
 			</div>
@@ -351,6 +355,89 @@
 			</div>
 		</center>
 
+		<!-- Community Editor Modal -->
+		<center id="communityEditorModal" class="topicmodal hide" ng-controller="community-editor" ng-init="name='';">
+			<a class="closemodal" ng-click="closeModal()" href="#!">{{ translation.close }}</a>
+			<div class="width-80">
+				<!-- Communities Dropdown -->
+				<div align="left" style="margin:5px">
+					<!-- Name -->
+					<input type="text" class="width-50" placeholder="{{ translation.title }}" ng-model="nameTxt"/>
+					<br>
+					<input type="text" class="width-50" placeholder="{{ translation.picture }}" ng-model="pictureTxt"/>
+				</div>
+
+				<!-- content composer -->
+				<div class="row centered">
+					<div class="col col-5 composer-textarea" style="height:200px;">
+						<h4>{{ translation.description }}</h4>
+						<textarea ng-model="descriptionTxt" style="height:200px;max-height:200px;"></textarea>
+
+						<br>
+						<button ng-click="sendCommunity()" class="button primary">{{ translation.send }}</button>
+					</div>
+
+					<div class="col col-5">
+					</div>
+				</div>
+
+				<div class="row centered">
+					<!-- mods list -->
+					<div class="col col-5">
+						<fieldset>
+							<legend>{{ translation.mods }}</legend>
+							<input type="text" placeholder="{{ translation.add_mod }}" ng-model="newModTxt"/>
+							<button ng-click="addModToCommunity(selectedCommunity.slug, newModTxt)" class="button primary">{{ translation.send }}</button>
+							<table class="striped" style="width:80%">
+							    <tbody>
+							        <tr ng-repeat="u in mods">
+							            <td style="width:50%;">
+							            	<img class="avatar small" ng-src="{{ u.picture }}">
+							            </td>
+							            <td>
+							            	<b>
+							            		<a href="#!" ng-click="loadUser(u.slug)">{{ u.username }}</a>
+							            	</b>
+							            </td>
+							            <td>
+							            	<a href="#!" ng-click="deleteModToCommunity(selectedCommunity.slug, u.slug)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+							            </td>
+							        </tr>
+							    </tbody>
+							</table>
+						</fieldset>
+					</div>
+
+					<!-- banned users list -->
+					<div class="col col-5">
+						<fieldset>
+							<legend>{{ translation.banned_users }}</legend>
+							<input type="text" placeholder="{{ translation.ban_user }}" ng-model="newBanTxt"/>
+							<button ng-click="banUserFromCommunity(selectedCommunity.slug, newBanTxt)" class="button primary">{{ translation.send }}</button>
+							<table class="striped" style="width:80%">
+							    <tbody>
+							        <tr ng-repeat="u in bans">
+							            <td style="width:50%;">
+							            	<img class="avatar small" ng-src="{{ u.picture }}">
+							            </td>
+							            <td>
+							            	<b>
+							            		<a href="#!" ng-click="loadUser(u.slug)">{{ u.username }}</a>
+							            	</b>
+							            </td>
+							            <td>
+							            	<a href="#!" ng-click="unbanUserFromCommunity(selectedCommunity.slug, u.slug)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+							            </td>
+							        </tr>
+							    </tbody>
+							</table>
+						</fieldset>
+					</div>
+				</div>
+
+			</div>
+		</center>
+
 
 		<!-- User Profile Modal -->
 		<center id="userProfileModal" class="topicmodal hide" ng-controller="user-profile" ng-init="slug='';userprofile='';">
@@ -524,6 +611,7 @@
 	<script type="text/javascript" src="/js/topiccontroller.js"></script>
 	<script type="text/javascript" src="/js/topic-composercontroller.js"></script>
 	<script type="text/javascript" src="/js/community-creatorcontroller.js"></script>
+	<script type="text/javascript" src="/js/community-editorcontroller.js"></script>
 	<script type="text/javascript" src="/js/user-profilecontroller.js"></script>
 	<script type="text/javascript" src="/js/user-editcontroller.js"></script>
 

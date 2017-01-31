@@ -22,11 +22,15 @@
 	"new_community":"New community",
 	"delete_post_confirm":"Are you sure you want to delete this post?",
 	"delete_topic_confirm":"Are you sure you want to delete this topic?",
+	"add_mod":"Add mod",
+	"ban_user":"Ban user",
 
 	"recent": "Recent",
 	"home": "Home",
 	"latest_topics": "Latest topics",
 	"ignored_users":"Ignored users",
+	"mods":"Moderators",
+	"banned_users":"Banned users",
 
 	"created":"Created",
 	"registered":"Registered",

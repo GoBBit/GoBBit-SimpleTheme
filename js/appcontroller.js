@@ -188,6 +188,12 @@ myApp.controller('App', function($scope, $http, AppService, Ajaxify) {
 		});
 	};
 
+	$scope.editCommunity = function(c){
+		var evt = new Event('community:edit');
+		evt.c = c;
+		window.dispatchEvent(evt);
+	};
+
 	$scope.loadTopic = function(tid){
 		var evt = new Event('topic:load');
 		evt.tid = tid;
