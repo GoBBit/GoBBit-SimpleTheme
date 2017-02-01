@@ -172,7 +172,7 @@ myApp.controller('App', function($scope, $http, AppService, Ajaxify, EmbedCombo)
 	$scope.getCommunities();
 
 	$scope.followCommunity = function(c){
-		$http.post("/api/user/follow/community?c="+ c).then(function(response) {
+		$http.post("/api/user/follow/community?c="+ c, {csrf:AppService.csrf}).then(function(response) {
 			$scope.user.followed_communities.push(c);
 		}, function(e){
 			AppService.showErrorAlert(e.data);

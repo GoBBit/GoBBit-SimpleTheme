@@ -12,7 +12,8 @@ myApp.controller('topic-composer', function($scope, $http, AppService, $sce) {
 		var data = {
 			title: $scope.titleTxt,
 			content: $scope.contentTxt,
-			community: $scope.selectedCommunity
+			community: $scope.selectedCommunity,
+			csrf:AppService.csrf
 		};
 
 		$http.post("/api/topic", data).then(function(response) {

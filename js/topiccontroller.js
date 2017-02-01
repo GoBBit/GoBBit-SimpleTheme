@@ -55,7 +55,8 @@ myApp.controller('topic', function($scope, $http, AppService, $sce, Ajaxify) {
 	$scope.sendReply = function(){
 		var data = {
 			tid: $scope.topic.id,
-			content: $scope.replyTxt
+			content: $scope.replyTxt,
+			csrf:AppService.csrf
 		};
 
 		$http.post("/api/post", data).then(function(response) {

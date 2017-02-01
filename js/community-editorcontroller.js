@@ -49,7 +49,7 @@ myApp.controller('community-editor', function($scope, $http, AppService) {
 	};
 
 	$scope.addModToCommunity = function(c, uslug){
-		$http.post("/api/community/mods?c="+ c +"&u="+ uslug).then(function(response) {
+		$http.post("/api/community/mods?c="+ c +"&u="+ uslug, {csrf:AppService.csrf}).then(function(response) {
 			$scope.getCommunityMods(c);
 		}, function(e){
 			AppService.showErrorAlert(e.data);
@@ -74,7 +74,7 @@ myApp.controller('community-editor', function($scope, $http, AppService) {
 	};
 
 	$scope.banUserFromCommunity = function(c, uslug){
-		$http.post("/api/community/ban?c="+ c +"&u="+ uslug).then(function(response) {
+		$http.post("/api/community/ban?c="+ c +"&u="+ uslug, {csrf:AppService.csrf}).then(function(response) {
 			$scope.getCommunityBans(c);
 		}, function(e){
 			AppService.showErrorAlert(e.data);

@@ -34,7 +34,7 @@ myApp.controller('user-profile', function($scope, $http, AppService, Ajaxify) {
 	};
 
 	$scope.ignoreUser = function(uid){
-		$http.post("/api/user/ignore?uid="+ uid).then(function(response) {
+		$http.post("/api/user/ignore?uid="+ uid, {csrf:AppService.csrf}).then(function(response) {
 			$scope.refreshUser();
 		}, function(e){
 			AppService.showErrorAlert(e.data);
@@ -50,7 +50,7 @@ myApp.controller('user-profile', function($scope, $http, AppService, Ajaxify) {
 	};
 
 	$scope.banUser = function(uid){
-		$http.post("/api/user/ban?uid="+ uid).then(function(response) {
+		$http.post("/api/user/ban?uid="+ uid, {csrf:AppService.csrf}).then(function(response) {
 			$scope.userprofile.isbanned = true;
 		}, function(e){
 			AppService.showErrorAlert(e.data);

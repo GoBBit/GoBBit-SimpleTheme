@@ -12,7 +12,8 @@ myApp.controller('community-creator', function($scope, $http, AppService) {
 		var data = {
 			name: $scope.nameTxt,
 			description: $scope.descriptionTxt,
-			picture: $scope.pictureTxt
+			picture: $scope.pictureTxt,
+			csrf:AppService.csrf
 		};
 
 		$http.post("/api/community", data).then(function(response) {
