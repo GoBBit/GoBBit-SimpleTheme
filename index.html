@@ -174,7 +174,7 @@
 			            	</span>
 
 			            	<span style="padding:10px">
-			            		<a ng-if="user.isadmin || (user.id == t.uid) || isMod(user.id, t.community)" ng-click="deleteTopic(t.id)" href="#!"><i class="fa fa-trash" aria-hidden="true"></i></a>
+			            		<a ng-if="user.isadmin || (user.id == t.uid) || isCommunityMod(t.community, user.id)" ng-click="deleteTopic(t.id)" href="#!"><i class="fa fa-trash" aria-hidden="true"></i></a>
 			            	</span>
 			            </td>
 			        </tr>

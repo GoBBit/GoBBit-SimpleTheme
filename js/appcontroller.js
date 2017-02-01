@@ -162,6 +162,18 @@ myApp.controller('App', function($scope, $http, AppService, Ajaxify, EmbedCombo)
 		}
 	};
 
+	$scope.searchCommunityBySlug = function(c){
+		for(i in $scope.communities)
+		{
+			var com = $scope.communities[i];
+			if(com.slug == c)
+			{
+				return i;
+			}
+		}
+		return -1;
+	};
+
 	$scope.getCommunities = function(){
 		$http.get("/api/communities").then(function(response) {
 	      $scope.communities = response.data;
@@ -194,6 +206,16 @@ myApp.controller('App', function($scope, $http, AppService, Ajaxify, EmbedCombo)
 		window.dispatchEvent(evt);
 	};
 
+	$scope.isCommunityMod = function(c, uid){
+		var idx = $scope.searchCommunityBySlug(c);
+		if(idx < 0){
+			return false;
+		}else{
+			var comm = $scope.communities[idx];
+			return comm.mods.indexOf(uid) >= 0;
+		}
+	};
+
 	$scope.loadTopic = function(tid){
 		var evt = new Event('topic:load');
 		evt.tid = tid;
@@ -220,20 +242,6 @@ myApp.controller('App', function($scope, $http, AppService, Ajaxify, EmbedCombo)
 		}, function(e){
 			AppService.showErrorAlert(e.data);
 		});
-	};
-
-	$scope.isMod = function(c, uid){
-		var cc = null;
-		for(i in $scope.communities)
-		{
-			var com = $scope.communities[i];
-			if(com.slug == c)
-			{
-				cc = com;
-				break;
-			}
-		}
-		return (cc && (cc.mods.indexOf(uid) >= 0))
 	};
 
 	$scope.loadUser = function(uslug){
