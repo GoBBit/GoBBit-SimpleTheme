@@ -20,6 +20,8 @@
 	"select_community": "Select community",
 	"new_topic":"New topic",
 	"new_community":"New community",
+	"communities":"Communities",
+	"notifications":"Notifications",
 	"delete_post_confirm":"Are you sure you want to delete this post?",
 	"delete_topic_confirm":"Are you sure you want to delete this topic?",
 	"add_mod":"Add mod",
@@ -51,5 +53,8 @@
 	"change_password": "Change Password",
 	"admin": "Admin",
 
-	"password_does_not_match": "Passwords does not match!"
+	"password_does_not_match": "Passwords does not match!",
+
+
+	"notification_mention":"%0 mentioned you on %1"
 }

@@ -10,7 +10,7 @@ myApp.service('AppService', function(){
 });
 
 
-myApp.controller('App', function($scope, $http, AppService, Ajaxify, EmbedCombo) {
+myApp.controller('App', function($scope, $http, AppService, Ajaxify, EmbedCombo, Translator) {
 	$scope.allLoaded = false;
 	// Load & setup language based on user browser lang
 	AppService.lang = $scope.lang = localStorage.getItem("lang") || navigator.language.toLowerCase().substr(0, 2) || "en";
@@ -64,7 +64,33 @@ myApp.controller('App', function($scope, $http, AppService, Ajaxify, EmbedCombo)
 			// error
 			//AppService.showErrorAlert(e.data);
 		});
-	}
+	};
+
+	$scope.getNotifications = function(){
+		$http.get("/api/notifications").then(function(response) {
+	      $scope.notifications = response.data;
+	      $scope.unread_notifications = $scope.notifications.filter(function(n){return n.read == false;}).length;
+		}, function(e){
+			// error
+		});
+	};
+	$scope.getNotifications();
+
+	$scope.selectNotification = function(n){
+		// marks as read and load topic/user..
+		$http.post("/api/notification/read?nid="+ n.id, {csrf:AppService.csrf}).then(function(response) {
+		}, function(e){
+			// error
+		});
+		$scope.loadNotificationContent(n);
+		$scope.getNotifications(); // update
+	};
+
+	$scope.loadNotificationContent = function(n){
+		if(n.type == "mention"){
+			$scope.loadTopic(n.entities.topic.id);
+		}
+	};
 
 	$scope.changeLanguage = function(){
 
@@ -328,6 +354,8 @@ myApp.controller('App', function($scope, $http, AppService, Ajaxify, EmbedCombo)
 	$scope.isAllLoaded = function(){
 		return $scope.allLoaded;
 	}
+
+	$scope.Translator = Translator;
 });
 
 // Used on mentions..

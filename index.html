@@ -20,7 +20,7 @@
 
 <body ng-app="GoBBit">
 
-	<div ng-controller="App" ng-init="user={};topics=[];communities=[];community=null;">
+	<div ng-controller="App" ng-init="user={};topics=[];communities=[];community=null;unread_notifications=0;">
 
 		<div id="navbar" class="sticky">
 			<nav id="navbar-main" class="row menu">
@@ -86,7 +86,7 @@
 
 		<!-- Communities Dropdown and New topic button -->
 		<div style="left: 10%;position: relative;margin:5px">
-			<button data-component="dropdown" data-target="#communities-dropdown">Communities<span class="caret down"></span></button>
+			<button data-component="dropdown" data-target="#communities-dropdown">{{ translation.communities }}<span class="caret down"></span></button>
 
 			<button ng-click="openTopicComposer()" ng-disabled="!user.username" class="button primary">{{ translation.new_topic }}</button>
 
@@ -97,6 +97,19 @@
 				
 				<ul class="communities">
 					<li ng-click="setCommunity($index)" style="float:none;" ng-repeat="c in communities"><a class="community" href="#!">{{ c.name }}</a></li>
+				</ul>
+
+				<a href="#!" data-action="dropdown-close">Close</a>
+			</center>
+		</div>
+		<div style="right:-85%;top:-45px;position:relative;margin:5px">
+			<button data-component="dropdown" data-target="#notifications-dropdown"><i class="fa fa-bell-o" aria-hidden="true"></i> {{ unread_notifications }} <span class="caret down"></span></button>
+		</div>
+		<div class="dropdown" id="notifications-dropdown">
+			<center>
+				
+				<ul class="communities">
+					<li ng-click="selectNotification(n)" data-action="dropdown-close" ng-class="{false:'notification_unread'}[n.read]" style="float:none;" ng-repeat="n in notifications"><a class="community text" href="#!">{{ Translator.translate("notification_"+n.type, [n.entities.user.username, n.entities.topic.title]) }}</a></li>
 				</ul>
 
 				<a href="#!" data-action="dropdown-close">Close</a>
@@ -606,6 +619,7 @@
 	<!-- Angular Controllers -->
 	<script type="text/javascript" src="/js/ajaxify.js"></script>
 	<script type="text/javascript" src="/js/embed-combo.js"></script>
+	<script type="text/javascript" src="/js/translator.js"></script>
 	<script type="text/javascript" src="/js/appcontroller.js"></script>
 	<script type="text/javascript" src="/js/logincontroller.js"></script>
 	<script type="text/javascript" src="/js/registercontroller.js"></script>

@@ -114,13 +114,13 @@ myApp.controller('topic', function($scope, $http, AppService, $sce, Ajaxify) {
 	};
 
 	$scope.destroy = function(){
-		// "destructor" to free memory deleting properties and HTML nodes
+		/* "destructor" to free memory deleting properties and HTML nodes
 		$scope.tid = "";
 		$scope.topic = {};
 		$scope.posts = [];
 		$scope.page = 0;
 		$scope.pages = 0;
-		$scope.replyTxt = "";
+		$scope.replyTxt = "";*/
 	};
 
 	$scope.closeModal = function(){
