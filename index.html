@@ -85,8 +85,10 @@
 		</center>
 
 		<!-- Communities Dropdown and New topic button -->
-		<div style="left: 10%;position: relative;margin:5px">
+		<div style="left: 10%;position: relative;margin:5px" class="width-50">
 			<button data-component="dropdown" data-target="#communities-dropdown">{{ translation.communities }}<span class="caret down"></span></button>
+
+			<button data-component="dropdown" data-target="#notifications-dropdown"><i class="fa fa-bell-o" aria-hidden="true"></i> {{ unread_notifications }} <span class="caret down"></span></button>
 
 			<button ng-click="openTopicComposer()" ng-disabled="!user.username" class="button primary">{{ translation.new_topic }}</button>
 
@@ -101,9 +103,6 @@
 
 				<a href="#!" data-action="dropdown-close">Close</a>
 			</center>
-		</div>
-		<div style="right:-85%;top:-45px;position:relative;margin:5px">
-			<button data-component="dropdown" data-target="#notifications-dropdown"><i class="fa fa-bell-o" aria-hidden="true"></i> {{ unread_notifications }} <span class="caret down"></span></button>
 		</div>
 		<div class="dropdown" id="notifications-dropdown">
 			<center>
@@ -168,17 +167,17 @@
 			    </thead>
 			    <tbody>
 			        <tr ng-repeat="t in topics">
-			            <td class="width-50">
+			            <td>
 			            	<b><a href="#!" ng-click="loadTopic(t.id)">{{ t.title }}</a></b>
 			            	<br>
 			            	<a href="#!" ng-click="loadUser(t.user.slug)" style="color:black;font-size:12px">{{ t.user.username }}</a>
 			            </td>
-			            <td class="width-30">
+			            <td>
 			            	<a href="#!" ng-click="setCommunityBySlug(t.community)">
 			            		{{ t.community }}
 			            	</a>
 			            </td>
-			            <td class="width-20">{{ formatDate(t.last_update) }}</td>
+			            <td>{{ formatDate(t.last_update) }}</td>
 			            <!-- Actions column -->
 			            <td>
 			            	<span style="padding:10px">
