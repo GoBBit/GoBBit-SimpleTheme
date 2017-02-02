@@ -86,6 +86,14 @@ myApp.controller('App', function($scope, $http, AppService, Ajaxify, EmbedCombo,
 		$scope.getNotifications(); // update
 	};
 
+	$scope.markAllNotificationsAsRead = function(){
+		$http.post("/api/notification/read/all", {csrf:AppService.csrf}).then(function(response) {
+		}, function(e){
+			// error
+		});
+		$scope.getNotifications(); // update
+	};
+
 	$scope.loadNotificationContent = function(n){
 		if(n.type == "mention"){
 			$scope.loadTopic(n.entities.topic.id);

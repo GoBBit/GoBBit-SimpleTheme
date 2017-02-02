@@ -56,5 +56,6 @@
 	"password_does_not_match": "Passwords does not match!",
 
 
-	"notification_mention":"%0 mentioned you on %1"
+	"notification_mention":"%0 mentioned you on %1",
+	"mark_all_as_read":"Mark all as read"
 }

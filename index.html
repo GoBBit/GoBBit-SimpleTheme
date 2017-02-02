@@ -95,23 +95,23 @@
 			<button ng-click="openCommunityCreator()" ng-if="user.username && user.isadmin" class="button primary">{{ translation.new_community }}</button>
 		</div>
 		<div class="dropdown" id="communities-dropdown">
-			<center>
-				
+			<center>				
 				<ul class="communities">
 					<li ng-click="setCommunity($index)" style="float:none;" ng-repeat="c in communities"><a class="community" href="#!">{{ c.name }}</a></li>
 				</ul>
 
-				<a href="#!" data-action="dropdown-close">Close</a>
+				<a href="#!" data-action="dropdown-close">{{ translation.close }}</a>
 			</center>
 		</div>
 		<div class="dropdown" id="notifications-dropdown">
 			<center>
-				
+				<a ng-click="markAllNotificationsAsRead()" href="#!">{{ translation.mark_all_as_read }}</a>
+
 				<ul class="communities">
 					<li ng-click="selectNotification(n)" data-action="dropdown-close" ng-class="{false:'notification_unread'}[n.read]" style="float:none;" ng-repeat="n in notifications"><a class="community text" href="#!">{{ Translator.translate("notification_"+n.type, [n.entities.user.username, n.entities.topic.title]) }}</a></li>
 				</ul>
 
-				<a href="#!" data-action="dropdown-close">Close</a>
+				<a href="#!" data-action="dropdown-close">{{ translation.close }}</a>
 			</center>
 		</div>
 
