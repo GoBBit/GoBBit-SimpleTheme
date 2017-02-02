@@ -52,6 +52,9 @@ myApp.controller('App', function($scope, $http, AppService, Ajaxify, EmbedCombo,
 		window.addEventListener('user:refresh', function(evt){
 			$scope.refreshUser();
 		});
+		window.addEventListener('community:load', function(evt){
+			$scope.setCommunityBySlug(evt.c);
+		});
 	};
 	$scope.init();
 
@@ -120,6 +123,7 @@ myApp.controller('App', function($scope, $http, AppService, Ajaxify, EmbedCombo,
 			}else{
 				$scope.topics = response.data;
 			}
+			Ajaxify.updateUrl(Translator.translate("home"), "/");
 		}, function(e){
 			// error
 		});
@@ -134,6 +138,7 @@ myApp.controller('App', function($scope, $http, AppService, Ajaxify, EmbedCombo,
 			}else{
 				$scope.topics = response.data;
 			}
+			Ajaxify.updateUrl(Translator.translate("recent"), "/");
 		}, function(e){
 			// error
 		});
@@ -210,7 +215,10 @@ myApp.controller('App', function($scope, $http, AppService, Ajaxify, EmbedCombo,
 
 	$scope.getCommunities = function(){
 		$http.get("/api/communities").then(function(response) {
-	      $scope.communities = response.data;
+	      	$scope.communities = response.data;
+
+	      	var evt = new Event('communities:loaded');
+			window.dispatchEvent(evt);
 		}, function(e){
 			// error
 		});
