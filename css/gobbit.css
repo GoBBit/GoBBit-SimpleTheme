@@ -157,6 +157,7 @@ a.community:hover{
 
 .embedElement{
 	width: 80%;
+	max-height: 400px;
 }
 
 
