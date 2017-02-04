@@ -55,6 +55,7 @@
 
 	"password_does_not_match": "Passwords does not match!",
 
+	"error_user_not_activated": "User not activated! Check your email to activate your account.",
 
 	"notification_mention":"%0 mentioned you on %1",
 	"mark_all_as_read":"Mark all as read"
