@@ -200,7 +200,7 @@
 
 
 		<!-- Topic content (messages..) -->
-		<center id="topicModal" class="topicmodal hide" ng-controller="topic" ng-init="topic={};tid='';posts=[];page=0;pages=0;">
+		<center id="topicModal" class="topicmodal hide" ng-controller="topic" ng-init="topic={};tid='';posts=[];page=0;pages=0;pollCreator={};">
 			<a class="closemodal" ng-click="closeModal()" href="#!">{{ translation.close }}</a>
 			<div class="width-80">
 				<nav class="pagination centered">
@@ -223,6 +223,43 @@
 						<a ng-click="loadUser(topic.user.slug)" href="#!">{{ topic.user.username }}</a>
 					</div>
 					<div class="col col-10" style="backgroun-color:#f4f4f4;">
+						<div ng-if="poll.title" id="poll">
+							<fieldset style="width:50%;">
+								<legend>{{ poll.title }}</legend>
+								<table class="striped">
+								    <tbody>
+								        <tr ng-repeat="opt in poll.options">
+								            <td class="width-80">
+								            	{{ opt.title }} ({{ opt.votes.length }})
+								            </td>
+								            <td class="width-20">
+								            	<a ng-if="user.id" ng-click="voteTopicPoll(opt.title)" href="#!"> {{ translation.vote }} </a>
+								            </td>
+								        </tr>
+								    </tbody>
+								</table>
+
+								<a ng-if="user.isadmin || (user.id == t.uid) || isCommunityMod(topic.community, user.id)" ng-click="deleteTopicPoll()" href="#!"> {{ translation.delete }} </a>
+							</fieldset>
+						</div>
+						<div ng-if="!poll.creation_date && user.id && (user.isadmin || (user.id == t.uid) || isCommunityMod(topic.community, user.id))" >
+							<!-- poll creator -->
+							<fieldset>
+								<legend>
+									<input ng-model="pollCreator.title" type="text" placeholder="{{ translation.poll_title }}">
+								</legend>
+
+								<div class="col col-5 composer-textarea" style="height:200px;">
+									<h4>{{ translation.poll_options }}</h4>
+									{{ translation.poll_options_info }}
+									<textarea ng-model="pollCreator.options" ng-change="updatePollPreview()" style="height:200px;max-height:200px;"></textarea>
+
+									<br>
+									<button ng-click="createTopicPoll()" class="button primary">{{ translation.send }}</button>
+								</div>
+							</fieldset>
+						</div>
+
 						<div ng-bind-html="parsePost(topic.content)">
 						</div>
 
@@ -245,8 +282,8 @@
 						<div class="col col-10">
 							<div align="right">
 								<!-- Post Actions -->
-								<a ng-if="user.isadmin || (user.id == p.uid) || isMod(user.id, t.community)" class="action-link" href="#!"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-								<a ng-if="user.isadmin || (user.id == p.uid) || isMod(user.id, t.community)" ng-click="deletePost(p.id)" class="action-link" href="#!"><i class="fa fa-trash" aria-hidden="true"></i></a>
+								<a ng-if="user.isadmin || (user.id == p.uid) || isCommunityMod(topic.community, user.id)" class="action-link" href="#!"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+								<a ng-if="user.isadmin || (user.id == p.uid) || isCommunityMod(topic.community, user.id)" ng-click="deletePost(p.id)" class="action-link" href="#!"><i class="fa fa-trash" aria-hidden="true"></i></a>
 							</div>
 
 							<div ng-bind-html="parsePost(p.content)">

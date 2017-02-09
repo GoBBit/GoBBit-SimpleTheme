@@ -6,6 +6,7 @@ myApp.controller('topic', function($scope, $http, AppService, $sce, Ajaxify) {
 			$scope.tid = evt.tid;
 			$scope.getTopic();
 			$scope.getTopicPosts(0);
+			$scope.getTopicPoll();
 
 			// Show modal
 			$("#topicModal").show(200);
@@ -36,6 +37,71 @@ myApp.controller('topic', function($scope, $http, AppService, $sce, Ajaxify) {
 		$scope.page = p;
 		var start = $scope.postsPerPage * p;
 		$scope.getTopicPosts(start);
+	};
+
+	$scope.getTopicPoll = function(){
+		$http.get("/api/poll?tid="+ $scope.tid).then(function(response) {
+	      $scope.poll = response.data;
+		}, function(e){
+			$scope.poll = {};
+			// AppService.showErrorAlert(e.data);
+		});
+	};
+
+	$scope.deleteTopicPoll = function(){
+		var confirmation = confirm(AppService.translation["delete_poll_confirm"]);
+		if(!confirmation){
+			return;
+		}
+
+		$http.delete("/api/poll?tid="+ $scope.tid).then(function(response) {
+	      $scope.poll = {};
+		}, function(e){
+			AppService.showErrorAlert(e.data);
+		});
+	};
+
+	$scope.voteTopicPoll = function(idx, option){
+		var data = {
+			pollid: $scope.poll.id,
+			title: option,
+			csrf: AppService.csrf
+		};
+
+		$http.post("/api/poll/vote", data).then(function(response) {
+			$scope.poll.options[idx].push(AppService.user.id)
+		}, function(e){
+			AppService.showErrorAlert(e.data);
+		});
+	};
+
+	$scope.createTopicPoll = function(){
+		var options = $scope.pollCreator.options.split("\n");
+		var title = $scope.pollCreator.title;
+
+		var data = {
+			title: title,
+			options: options,
+			tid: $scope.topic.id,
+			csrf: AppService.csrf
+		};
+		
+		$http.post("/api/poll", data).then(function(response) {
+			$scope.poll = response.data;
+		}, function(e){
+			AppService.showErrorAlert(e.data);
+		});
+	};
+
+	$scope.updatePollPreview = function(){
+		var options = $scope.pollCreator.options.split("\n");
+		var title = $scope.pollCreator.title;
+		$scope.poll.title = title;
+		$scope.poll.options = [];
+		for(var i=0;i<options.length;i++)
+		{
+			$scope.poll.options.push({ title:options[i], votes:[] });
+		}
 	};
 
 	$scope.nextPage = function(){
@@ -114,13 +180,14 @@ myApp.controller('topic', function($scope, $http, AppService, $sce, Ajaxify) {
 	};
 
 	$scope.destroy = function(){
-		/* "destructor" to free memory deleting properties and HTML nodes
+		// "destructor" to free memory deleting properties and HTML nodes
 		$scope.tid = "";
 		$scope.topic = {};
 		$scope.posts = [];
 		$scope.page = 0;
 		$scope.pages = 0;
-		$scope.replyTxt = "";*/
+		$scope.replyTxt = "";
+		$scope.poll = {};
 	};
 
 	$scope.closeModal = function(){
