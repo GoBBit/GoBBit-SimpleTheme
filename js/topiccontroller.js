@@ -69,7 +69,7 @@ myApp.controller('topic', function($scope, $http, AppService, $sce, Ajaxify) {
 		};
 
 		$http.post("/api/poll/vote", data).then(function(response) {
-			$scope.poll.options[idx].push(AppService.user.id)
+			$scope.poll.options[idx].votes.push(AppService.user.id)
 		}, function(e){
 			AppService.showErrorAlert(e.data);
 		});

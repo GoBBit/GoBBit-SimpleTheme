@@ -97,7 +97,7 @@
 		<div class="dropdown" id="communities-dropdown">
 			<center>				
 				<ul class="communities">
-					<li ng-click="setCommunity($index)" style="float:none;" ng-repeat="c in communities"><a class="community" href="#!">{{ c.name }}</a></li>
+					<li ng-click="setCommunity($index)" data-action="dropdown-close" style="float:none;" ng-repeat="c in communities"><a class="community" href="#!">{{ c.name }}</a></li>
 				</ul>
 
 				<a href="#!" data-action="dropdown-close">{{ translation.close }}</a>
@@ -233,7 +233,7 @@
 								            	{{ opt.title }} ({{ opt.votes.length }})
 								            </td>
 								            <td class="width-20">
-								            	<a ng-if="user.id" ng-click="voteTopicPoll(opt.title)" href="#!"> {{ translation.vote }} </a>
+								            	<a ng-if="user.id" ng-click="voteTopicPoll($index, opt.title)" href="#!"> {{ translation.vote }} </a>
 								            </td>
 								        </tr>
 								    </tbody>
