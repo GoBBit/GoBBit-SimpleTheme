@@ -200,7 +200,7 @@
 
 
 		<!-- Topic content (messages..) -->
-		<center id="topicModal" class="topicmodal hide" ng-controller="topic" ng-init="topic={};tid='';posts=[];page=0;pages=0;pollCreator={};">
+		<center id="topicModal" class="topicmodal hide" ng-controller="topic" ng-init="topic={};tid='';posts=[];page=0;pages=0;pollCreator={opened:false};">
 			<a class="closemodal" ng-click="closeModal()" href="#!">{{ translation.close }}</a>
 			<div class="width-80">
 				<nav class="pagination centered">
@@ -224,7 +224,7 @@
 					</div>
 					<div class="col col-10" style="backgroun-color:#f4f4f4;">
 						<div ng-if="poll.title" id="poll">
-							<fieldset style="width:50%;">
+							<fieldset>
 								<legend>{{ poll.title }}</legend>
 								<table class="striped">
 								    <tbody>
@@ -233,7 +233,7 @@
 								            	{{ opt.title }} ({{ opt.votes.length }})
 								            </td>
 								            <td class="width-20">
-								            	<a ng-if="user.id" ng-click="voteTopicPoll($index, opt.title)" href="#!"> {{ translation.vote }} </a>
+								            	<a ng-if="user.id" ng-click="voteTopicPoll(opt.title)" href="#!"> {{ translation.vote }} </a>
 								            </td>
 								        </tr>
 								    </tbody>
@@ -242,11 +242,13 @@
 								<a ng-if="user.isadmin || (user.id == t.uid) || isCommunityMod(topic.community, user.id)" ng-click="deleteTopicPoll()" href="#!"> {{ translation.delete }} </a>
 							</fieldset>
 						</div>
-						<div ng-if="!poll.creation_date && user.id && (user.isadmin || (user.id == t.uid) || isCommunityMod(topic.community, user.id))" >
-							<!-- poll creator -->
+
+						<!-- poll creator -->
+						<a href="#!" ng-if="!poll.creation_date && user.id && (user.isadmin || (user.id == t.uid) || isCommunityMod(topic.community, user.id))" ng-click="pollCreator.opened=!pollCreator.opened;"> <i class="fa fa-bar-chart" aria-hidden="true"></i> </a>
+						<div ng-if="pollCreator.opened && user.id && (user.isadmin || (user.id == t.uid) || isCommunityMod(topic.community, user.id))" >
 							<fieldset>
-								<legend>
-									<input ng-model="pollCreator.title" type="text" placeholder="{{ translation.poll_title }}">
+								<legend style="width:90%;">
+									<input style="width:100%;" ng-model="pollCreator.title" type="text" placeholder="{{ translation.poll_title }}">
 								</legend>
 
 								<div class="col col-5 composer-textarea" style="height:200px;">

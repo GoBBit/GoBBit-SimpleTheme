@@ -61,7 +61,7 @@ myApp.controller('topic', function($scope, $http, AppService, $sce, Ajaxify) {
 		});
 	};
 
-	$scope.voteTopicPoll = function(idx, option){
+	$scope.voteTopicPoll = function(option){
 		var data = {
 			pollid: $scope.poll.id,
 			title: option,
@@ -69,7 +69,7 @@ myApp.controller('topic', function($scope, $http, AppService, $sce, Ajaxify) {
 		};
 
 		$http.post("/api/poll/vote", data).then(function(response) {
-			$scope.poll.options[idx].votes.push(AppService.user.id)
+			$scope.poll = response.data;
 		}, function(e){
 			AppService.showErrorAlert(e.data);
 		});
@@ -188,10 +188,12 @@ myApp.controller('topic', function($scope, $http, AppService, $sce, Ajaxify) {
 		$scope.pages = 0;
 		$scope.replyTxt = "";
 		$scope.poll = {};
+		$scope.pollCreator = {opened:false};
 	};
 
 	$scope.closeModal = function(){
 		$("#topicModal").hide(200);
+		$scope.destroy();
 	};
 
 });

@@ -27,6 +27,7 @@
 	"delete_poll_confirm":"Are you sure you want to delete this poll?",
 	"add_mod":"Add mod",
 	"ban_user":"Ban user",
+	"create_poll":"Create poll",
 
 	"recent": "Recent",
 	"home": "Home",
