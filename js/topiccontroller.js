@@ -42,6 +42,7 @@ myApp.controller('topic', function($scope, $http, AppService, $sce, Ajaxify) {
 	$scope.getTopicPoll = function(){
 		$http.get("/api/poll?tid="+ $scope.tid).then(function(response) {
 	      $scope.poll = response.data;
+	      $scope.calculatePercentagesTopicPoll();
 		}, function(e){
 			$scope.poll = {};
 			// AppService.showErrorAlert(e.data);
@@ -70,9 +71,22 @@ myApp.controller('topic', function($scope, $http, AppService, $sce, Ajaxify) {
 
 		$http.post("/api/poll/vote", data).then(function(response) {
 			$scope.poll = response.data;
+			$scope.calculatePercentagesTopicPoll();
 		}, function(e){
 			AppService.showErrorAlert(e.data);
 		});
+	};
+
+	$scope.calculatePercentagesTopicPoll = function(){
+		var options = $scope.poll.options;
+		var total = 0;
+		for(i in options){
+			total += options[i].votes.length;
+		}
+
+		for(i in options){
+			options[i].percent = parseInt((options[i].votes.length / total) * 100);
+		}
 	};
 
 	$scope.createTopicPoll = function(){
@@ -88,6 +102,7 @@ myApp.controller('topic', function($scope, $http, AppService, $sce, Ajaxify) {
 		
 		$http.post("/api/poll", data).then(function(response) {
 			$scope.poll = response.data;
+			$scope.calculatePercentagesTopicPoll();
 		}, function(e){
 			AppService.showErrorAlert(e.data);
 		});
@@ -102,6 +117,7 @@ myApp.controller('topic', function($scope, $http, AppService, $sce, Ajaxify) {
 		{
 			$scope.poll.options.push({ title:options[i], votes:[] });
 		}
+		$scope.calculatePercentagesTopicPoll();
 	};
 
 	$scope.nextPage = function(){

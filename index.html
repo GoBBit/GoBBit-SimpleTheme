@@ -229,10 +229,15 @@
 								<table class="striped">
 								    <tbody>
 								        <tr ng-repeat="opt in poll.options">
-								            <td class="width-80">
-								            	{{ opt.title }} ({{ opt.votes.length }})
+								            <td class="width-40">
+								            	{{ opt.title }}
 								            </td>
-								            <td class="width-20">
+								            <td class="width-50">
+								            	<div class="poll-percent-bar" style="width:{{ opt.percent < 10 ? 10 : opt.percent }}%;">
+								            		{{ opt.percent }}% ({{ opt.votes.length }})
+								            	</div>
+								            </td>
+								            <td class="width-10">
 								            	<a ng-if="user.id" ng-click="voteTopicPoll(opt.title)" href="#!"> {{ translation.vote }} </a>
 								            </td>
 								        </tr>

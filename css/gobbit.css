@@ -165,3 +165,10 @@ a.community:hover{
 	background-color: #A5C1CE;
 }
 
+.poll-percent-bar{
+	width: 0%;
+    background-color: #255bbd;
+    color: white;
+    padding: 5px;
+}
+
