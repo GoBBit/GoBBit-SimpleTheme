@@ -19,6 +19,11 @@ myApp.controller('topic-composer', function($scope, $http, AppService, $sce) {
 		$http.post("/api/topic", data).then(function(response) {
 			$scope.closeModal();
 
+			// open created topic
+			var evt = new Event('topic:load');
+			evt.tid = response.data.id;
+			window.dispatchEvent(evt);
+
 			// Clean all
 			$scope.titleTxt = "";
 			$scope.contentTxt = "";
